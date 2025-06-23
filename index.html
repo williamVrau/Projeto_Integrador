@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Timbó</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+   
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Barra de navegação -->
+    <nav>
+        <div><a href="#">Página Inicial</a></div>
+        <div>
+            <button onclick="clearPoints()" style="position:absolute;top:60px;left:10px;z-index:1000;">🗑️ Limpar Pontos</button>
+            <a href="#">Cadastro de Usuários</a>
+            <a href="#">Login</a>
+        </div>
+    </nav>
+
+    <!-- Mapa -->
+    <div id="map" style="height: calc(100% - 50px);"></div>
+
+    <!-- Lista de Pontos -->
+    <div id="pointsList" style="padding: 20px; background-color: #f9f9f9; margin-top: 20px;">
+        <!-- A lista de pontos será gerada aqui via JS -->
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>

@@ -1,0 +1,120 @@
+/* Resetando margens e padding */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+/* Estilizando a barra de navegação */
+nav {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+nav button {
+    background-color: #ff4d4d;
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+nav button:hover {
+    background-color: #e60000;
+}
+
+/* Estilizando o mapa */
+#map {
+    height: calc(100% - 90px); /* Deduzindo a altura da barra de navegação */
+}
+
+/* Estilizando a lista de pontos */
+#pointsList {
+    padding: 20px;
+    background-color: #f9f9f9;
+    margin-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+#pointsList ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#pointsList li {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+}
+
+#pointsList li strong {
+    font-size: 16px;
+    color: #007bff;
+}
+
+#pointsList li img {
+    margin-top: 10px;
+    max-width: 100%;
+}
+
+/* Estilizando os botões de voto */
+#pointsList button {
+    background-color: #28a745;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#pointsList button:hover {
+    background-color: #218838;
+}
+
+/* Estilizando o formulário de adição de ponto */
+#pointForm label {
+    font-weight: bold;
+}
+
+#pointForm input,
+#pointForm textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#pointForm button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#pointForm button:hover {
+    background-color: #0056b3;
+}
