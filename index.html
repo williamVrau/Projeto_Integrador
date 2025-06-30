@@ -1,31 +1,57 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Mapa de Timbó</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cidadão Alerta</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-    <!-- Barra de navegação -->
+  <header>
+    <h1>Cidadão Alerta</h1>
     <nav>
-        <div><a href="#">Página Inicial</a></div>
-        <div>
-            <button onclick="clearPoints()" style="position:absolute;top:60px;left:10px;z-index:1000;">🗑️ Limpar Pontos</button>
-            <a href="#">Cadastro de Usuários</a>
-            <a href="#">Login</a>
-        </div>
+      <button onclick="showSection('login')">Login</button>
+      <button onclick="showSection('registro')">Registro</button>
+      <button onclick="showSection('ocorrencias')">Ocorrências</button>
+      <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
     </nav>
+  </header>
 
-    <!-- Mapa -->
-    <div id="map" style="height: calc(100% - 50px);"></div>
+  <main>
+    <!-- Seção de login com campos de e-mail e senha -->
+    <section id="login" class="content-section active">
+      <h2>Login</h2>
+      <input type="email" id="loginEmail" placeholder="Email" />
+      <input type="password" id="loginSenha" placeholder="Senha" />
+      <button onclick="login()">Entrar</button>
+    </section>
 
-    <!-- Lista de Pontos -->
-    <div id="pointsList" style="padding: 20px; background-color: #f9f9f9; margin-top: 20px;">
-        <!-- A lista de pontos será gerada aqui via JS -->
-    </div>
+    <!-- Seção de registro com nome, e-mail e senha -->
+    <section id="registro" class="content-section hidden">
+      <h2>Registro</h2>
+      <input type="text" id="regNome" placeholder="Nome" />
+      <input type="email" id="regEmail" placeholder="Email"  />
+      <input type="password" id="regSenha" placeholder="Senha" />
+      <button onclick="registrar()">Cadastrar</button>
+    </section>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+    <!-- Seção onde o mapa e os pontos de ocorrência são exibidos -->
+    <section id="ocorrencias" class="content-section hidden">
+      <h2>Registrar Ocorrência</h2>
+
+      <!-- Mapa interativo para registrar ocorrências clicando -->
+      <div id="map" style="height: 400px; margin-top: 10px; z-index: 1;"></div>
+
+      <!-- Lista de ocorrências salvas pelo usuário -->
+      <div id="pointsList" style="padding: 20px; background-color: #f9f9f9; margin-top: 20px;">
+        <!-- Lista de pontos gerada pelo JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
 </body>
+</html>
