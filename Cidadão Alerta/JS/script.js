@@ -26,8 +26,8 @@ function showSection(id) {
 }
 
 //Inicialização do Mapa
- {
-  map = L.map('map').setView([-26.8233, -49.2706], 8);
+function inicializarMapa() {
+  map = L.map('map').setView([-26.8233, -49.2706], 13);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
@@ -61,6 +61,15 @@ function onMapClick(e) {
     <form id="pointForm">
       <label>Nome:<br><input type="text" id="pointName" required></label><br>
       <label>Descrição:<br><textarea id="pointDesc" required></textarea></label><br>
+      <label for="tipoOcorrencia">Selecione o tipo de ocorrência:</label>
+      <br>
+        <select id="tipoOcorrencia" name="tipoOcorrencia">
+      <option value="">-- Escolha uma opção --</option>
+      <option value="infraestrutura">Infraestrutura</option>
+      <option value="cabos-rompidos">Cabos Rompidos</option>
+      <option value="lixo">Lixo</option>
+      <option value="melhorias">Melhorias</option>
+        </select>
       <label>Imagem (máx 2MB):<br><input type="file" id="pointImage"></label><br>
       <button type="submit">Salvar</button>
     </form>
@@ -75,6 +84,7 @@ function onMapClick(e) {
       const name = document.getElementById('pointName').value;
       const description = document.getElementById('pointDesc').value;
       const imageFile = document.getElementById('pointImage').files[0];
+      const tipoOcorrencia = document.getElementById('tipoOcorrencia').value;
       if (imageFile && imageFile.size > 2 * 1024 * 1024) {
         alert("Imagem muito grande! Máximo: 2MB.");
         return;
@@ -82,24 +92,25 @@ function onMapClick(e) {
       if (imageFile) {
         const reader = new FileReader();
         reader.onloadend = function () {
-          savePoint(name, description, latlng, reader.result, 1);
+          savePoint(name, description, latlng, reader.result, 1,tipoOcorrencia);
         };
         reader.readAsDataURL(imageFile);
       } else {
-        savePoint(name, description, latlng, '', 1);
+        savePoint(name, description, latlng, '', 1,tipoOcorrencia);
       }
     });
   }, 100);
 }
 
 //Salvar novo ponto
-function savePoint(name, description, latlng, imageUrl, votes = 1) {
+function savePoint(name, description, latlng, imageUrl, votes = 1,tipoOcorrencia) {
   const newPoint = {
     name,
     description,
     lat: latlng.lat,
     lng: latlng.lng,
     imageUrl: imageUrl || '',
+    tipoOcorrencia,
     votes
   };
   const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
@@ -141,6 +152,7 @@ function addMarkerToMap(point) {
     ${point.description}<br>
     ${point.imageUrl ? `<img src="${point.imageUrl}" width="100" /><br>` : ''}
     <strong>Votos:</strong> <span id="votes-${point.lat}-${point.lng}">${point.votes}</span><br>
+    <strong><span id= "tipoOcorrencia">${point.tipoOcorrencia}</span></strong><br>
     <button onclick="votePoint(${point.lat}, ${point.lng})">👍 Votar</button>
   `;
 
@@ -154,7 +166,10 @@ function votePoint(lat, lng) {
   if (pointIndex !== -1) {
     savedPoints[pointIndex].votes += 1;
     localStorage.setItem('mapPoints', JSON.stringify(savedPoints));
-    location.reload();
+    loadPointsList(); // se necessário para atualizar a lista de ocorrências
+
+    const votoSpan = document.getElementById("votes-" + savedPoints[pointIndex].lat + "-" + savedPoints[pointIndex].lng);
+    votoSpan.textContent = savedPoints[pointIndex].votes;
   }
 }
 
@@ -195,18 +210,7 @@ function loadPointsList() {
 function login() {
   const email = document.getElementById('loginEmail').value;
   const senha = document.getElementById('loginSenha').value;
-
-  
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  const user = usuarios.find(u => u.email === email && u.senha === senha);
-  if (user) {
-    alert("Logado com sucesso: " + user.nome);
-    localStorage.setItem('usuarioLogado', JSON.stringify(user));
-    atualizarEstadoLogin();
-    showSection('ocorrencias');
-  } else {
-    alert("Usuário ou senha inválidos.");
-  }
+  logar(email, senha)
 }
 
 //Função de Registro local usando localStorage
@@ -225,6 +229,7 @@ function registrar() {
   usuarios.push(novoUsuario);
   localStorage.setItem("usuarios", JSON.stringify(usuarios));
   alert("Usuário cadastrado com sucesso!");
+  logar(email, senha)
   
 }
 
@@ -248,6 +253,20 @@ function atualizarEstadoLogin() {
   } else {
     logoutBtn.style.display = 'none';
   }
+}
+
+function logar (email, senha){
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  const user = usuarios.find(u => u.email === email && u.senha === senha);
+  if (user) {
+    alert("Logado com sucesso: " + user.nome);
+    localStorage.setItem('usuarioLogado', JSON.stringify(user));
+    atualizarEstadoLogin();
+    showSection('ocorrencias');
+  } else {
+    alert("Usuário ou senha inválidos.");
+  }
+
 }
 
 //Ações iniciais ao carregar a página

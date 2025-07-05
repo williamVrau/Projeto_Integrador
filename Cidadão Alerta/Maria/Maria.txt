@@ -1,0 +1,114 @@
+	Filtros na Lista de Ocorrências: Adicione filtros para a lista de pontos - jv
+
+function filterPoints(criteria) {
+  const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
+  let filteredPoints = savedPoints;
+  if (criteria === 'votes') {
+    filteredPoints.sort((a, b) => b.votes - a.votes);
+  } else if (criteria === 'name') {
+    filteredPoints.sort((a, b) => a.name.localeCompare(b.name));
+  }
+  renderPointsList(filteredPoints);
+}
+
+	Pesquisa de Ocorrências: barra de pesquisa - html
+
+<input type="text" id="searchOccurrences" placeholder="Pesquisar ocorrências..." oninput="searchPoints(this.value)">
+
+	
+	Feedback Visual no Mapa: ícone  "carregando" enquanto o mapa é inicializado pra evitar confusão. - CSS
+
+#map.loading::before {
+  content: "Carregando mapa...";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  color: white;
+}
+
+
+	Responsividade - css
+
+@media (max-width: 600px) {
+  #map {
+    height: 250px;
+  }
+  input, button {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+
+	Botões como "Votar" ou "Sair" - html
+
+<button onclick="votePoint(${point.lat}, ${point.lng})"><i class="fas fa-thumbs-up"></i> Votar</button>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+	Controles de zoom e uma legenda para as cores dos marcadores - jv
+
+L.control.scale().addTo(map);
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = function () {
+  const div = L.DomUtil.create('div', 'legend');
+  div.innerHTML = `
+    <h4>Legenda</h4>
+    <i style="color: blue;">0-4 votos</i><br>
+    <i style="color: orange;">5-9 votos</i><br>
+    <i style="color: red;">10-14 votos</i><br>
+    <i style="color: black;">15+ votos</i>
+  `;
+  return div;
+};
+legend.addTo(map);
+
+
+	Modo Escuro - jv
+
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-mode');
+}
+
+    NO CSS
+
+.dark-mode {
+  background: #1c2526;
+  color: #f4f4f4;
+}
+.dark-mode header {
+  background: #003f66;
+}
+
+
+	EdiTAR e Excluir Ocorrências - jv
+
+function savePoint(name, description, latlng, imageUrl, votes = 1) {
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+  const newPoint = {
+    name,
+    description,
+    lat: latlng.lat,
+    lng: latlng.lng,
+    imageUrl: imageUrl || '',
+    votes,
+    userEmail: usuario.email
+  };
+  // ... resto do código
+}
+
+
+	Botão para centralizar - jv
+
+function centerMapOnUser() {
+  navigator.geolocation.getCurrentPosition(pos => {
+    map.setView([pos.coords.latitude, pos.coords.longitude], 12);
+  }, () => alert('Geolocalização não permitida.'));
+}
+
+
+
+
+
