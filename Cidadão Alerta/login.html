@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cidadão Alerta</title>
   <link rel="stylesheet" href="CSS/styles.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
   <header>
@@ -19,14 +18,15 @@
       <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
     </nav>
   </header>
-
   <main>
-    <img src="IMGs/mapa-sc-municipios.jpg" alt="Mapa de Santa Catarina">
-    
-  </main>
-
+    <!-- Seção de login com campos de e-mail e senha -->
+    <section id="login">
+      <h2>Login</h2>
+      <input type="email" id="loginEmail" placeholder="Email" />
+      <input type="password" id="loginSenha" placeholder="Senha" />
+      <button onclick="login()">Entrar</button>
+    </section>
   <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="JS/usuarioJS.js"></script>
 </body>
 </html>

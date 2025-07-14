@@ -1,29 +1,12 @@
 //Inicialização de Variáveis
 let mapInitialized = false;
 let map;
-
-//Função para alternar entre seções da interface
-function showSection(id) {
-  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-
-  //Bloqueia acesso às ocorrências se não estiver logado
-  if (id === 'ocorrencias' && !usuario) {
-    alert("Você precisa estar logado para acessar as ocorrências.");
-    return;
-  }
-  //Esconde todas as seções e mostra apenas a desejada
-  document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  //Inicializa o mapa apenas uma vez
-  if (id === 'ocorrencias' && !mapInitialized) {
-    setTimeout(() => {
+setTimeout(() => {
       inicializarMapa();
       loadPointsList();
       map.invalidateSize();
       mapInitialized = true;
     }, 100);
-  }
-}
 
 //Inicialização do Mapa
 function inicializarMapa() {
@@ -103,7 +86,10 @@ function onMapClick(e) {
 }
 
 //Salvar novo ponto
-function savePoint(name, description, latlng, imageUrl, votes = 1,tipoOcorrencia) {
+function savePoint(name, description, latlng, imageUrl, votes = 1, tipoOcorrencia) {
+  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
+  const nomeCriador = usuarioLogado ? usuarioLogado.nome : 'Anônimo';
+
   const newPoint = {
     name,
     description,
@@ -111,8 +97,10 @@ function savePoint(name, description, latlng, imageUrl, votes = 1,tipoOcorrencia
     lng: latlng.lng,
     imageUrl: imageUrl || '',
     tipoOcorrencia,
-    votes
+    votes,
+    criador: nomeCriador
   };
+
   const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
   savedPoints.push(newPoint);
   localStorage.setItem('mapPoints', JSON.stringify(savedPoints));
@@ -149,6 +137,7 @@ function addMarkerToMap(point) {
 
   const popupContent = `
     <strong>${point.name}</strong><br>
+    <span>${point.criador}</span></strong><br>
     ${point.description}<br>
     ${point.imageUrl ? `<img src="${point.imageUrl}" width="100" /><br>` : ''}
     <strong>Votos:</strong> <span id="votes-${point.lat}-${point.lng}">${point.votes}</span><br>
@@ -205,72 +194,6 @@ function loadPointsList() {
 
   listContainer.appendChild(ul);
 }
-
-//Função de Login local usando localStorage
-function login() {
-  const email = document.getElementById('loginEmail').value;
-  const senha = document.getElementById('loginSenha').value;
-  logar(email, senha)
-}
-
-//Função de Registro local usando localStorage
-function registrar() {
-  const nome = document.getElementById('regNome').value;
-  const email = document.getElementById('regEmail').value;
-  const senha = document.getElementById('regSenha').value;
-
-  
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  if (usuarios.find(u => u.email === email)) {
-    alert("Email já registrado.");
-    return;
-  }
-  const novoUsuario = { nome, email, senha };
-  usuarios.push(novoUsuario);
-  localStorage.setItem("usuarios", JSON.stringify(usuarios));
-  alert("Usuário cadastrado com sucesso!");
-  logar(email, senha)
-  
-}
-
-//Logout e atualização do estado do botão "Sair"
-function logout() {
-  localStorage.removeItem('usuarioLogado');
-  alert("Você saiu da conta.");
-  atualizarEstadoLogin();
-  showSection('login');
-}
-
-
-
-//Exibe ou esconde botão "Sair" conforme status de login
-function atualizarEstadoLogin() {
-  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-  const logoutBtn = document.getElementById('logoutBtn');
-
-  if (usuario) {
-    logoutBtn.style.display = 'inline-block';
-  } else {
-    logoutBtn.style.display = 'none';
-  }
-}
-
-function logar (email, senha){
-  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-  const user = usuarios.find(u => u.email === email && u.senha === senha);
-  if (user) {
-    alert("Logado com sucesso: " + user.nome);
-    localStorage.setItem('usuarioLogado', JSON.stringify(user));
-    atualizarEstadoLogin();
-    showSection('ocorrencias');
-  } else {
-    alert("Usuário ou senha inválidos.");
-  }
-
-}
-
-//Ações iniciais ao carregar a página
 window.addEventListener('DOMContentLoaded', () => {
   loadPointsList();
-  atualizarEstadoLogin();
 });

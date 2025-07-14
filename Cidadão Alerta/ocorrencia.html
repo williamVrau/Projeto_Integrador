@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cidadão Alerta</title>
+  <link rel="stylesheet" href="CSS/styles.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+  <header>
+    <h1>Cidadão Alerta</h1>
+    <nav>
+        <span id="nomeUsuario"></span>
+        <a href="index.html" target="_blank">Pagina Inicial</a>
+        <a id="loginLink" href="login.html" target="_blank">Login</a>
+        <a id="registroLink" href="registro.html" target="_blank">Registrar</a>
+        <a href="ocorrencia.html">ocorrencia</a>
+        <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
+    </nav>
+  </header>
+  <main>
+    <!-- Seção onde o mapa e os pontos de ocorrência são exibidos -->
+    <section id="ocorrencias">
+      <h2>Registrar Ocorrência</h2>
+
+      <!-- Mapa interativo para registrar ocorrências clicando -->
+      <div id="map"></div>
+
+      <!-- Lista de ocorrências salvas pelo usuário -->
+      <div id="pointsList" style="padding: 20px; background-color: #f9f9f9; margin-top: 20px;">
+        <!-- Lista de pontos gerada pelo JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="JS/usuarioJS.js"></script>
+  <script src="JS/mapaJS.js">   </script>
+</body>
+</html>
