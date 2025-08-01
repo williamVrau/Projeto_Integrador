@@ -8,11 +8,11 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>Grupo.Cidadao.Alerta</groupId>
+	<groupId>.com.cidadao-alerta</groupId>
 	<artifactId>Cidadao-Alerta</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Cidadao-Alerta</name>
-	<description>Página web interativa para cadastramento de locais com ocorrências urbanas, permitindo que usuários informem problemas como buracos, entre outros.</description>
+	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -39,6 +39,17 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>

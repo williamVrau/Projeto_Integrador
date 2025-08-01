@@ -1,4 +1,4 @@
-package Grupo.Cidadao.Alerta.Cidadao.Alerta;
+package com.cidadao_alerta.Cidadao_Alerta;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package Grupo.Cidadao.Alerta.Cidadao.Alerta;
+package com.cidadao_alerta.Cidadao_Alerta;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,0 +1,26 @@
+-- Criação do schema
+CREATE SCHEMA IF NOT EXISTS cidadao_alerta;
+USE cidadao_alerta;
+
+-- Criação da tabela usuario
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL,
+    classe VARCHAR(50)
+);
+
+-- Criação da tabela pontos
+CREATE TABLE pontos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    lat DOUBLE NOT NULL,
+    lng DOUBLE NOT NULL,
+    tipo_ocorencia VARCHAR(100),
+    votos INT DEFAULT 0,
+    usuario_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
+);
+
