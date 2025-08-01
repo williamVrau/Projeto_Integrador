@@ -17,7 +17,7 @@ public class Pontos {
     @ManyToOne()
     @JoinColumn(name = "usuario_id")
     @JsonIgnore()
-    private Usuario criador;
+    private Usuario usuario;
 
     public Integer getId() {
         return id;
@@ -48,7 +48,7 @@ public class Pontos {
     }
 
     public Usuario getCriador() {
-        return criador;
+        return usuario;
     }
 
     public void setId(Integer id) {
@@ -80,6 +80,6 @@ public class Pontos {
     }
 
     public void setCriador(Usuario criador) {
-        this.criador = criador;
+        this.usuario = criador;
     }
 }
