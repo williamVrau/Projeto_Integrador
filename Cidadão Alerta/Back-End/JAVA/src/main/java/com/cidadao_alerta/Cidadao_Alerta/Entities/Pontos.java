@@ -3,6 +3,10 @@ package com.cidadao_alerta.Cidadao_Alerta.Entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class Pontos {
     @Id
@@ -13,73 +17,94 @@ public class Pontos {
     private Double lat;
     private Double lng;
     private String tipoOcorencia;
-    private Integer votos;
+    private LocalDate dataCriacao;
+    private String situacao;
+
     @ManyToOne()
     @JoinColumn(name = "usuario_id")
     @JsonIgnore()
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "pontos",cascade = CascadeType.ALL)
+    private List<Voto> votos = new ArrayList<>();
+
     public Integer getId() {
         return id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public Double getLng() {
-        return lng;
-    }
-
-    public String getTipoOcorencia() {
-        return tipoOcorencia;
-    }
-
-    public Integer getVotos() {
-        return votos;
-    }
-
-    public Usuario getCriador() {
-        return usuario;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public void setLat(Double lat) {
-        this.lat = lat;
+    public Double getLng() {
+        return lng;
     }
 
     public void setLng(Double lng) {
         this.lng = lng;
     }
 
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public LocalDate getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDate dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    public String getTipoOcorencia() {
+        return tipoOcorencia;
+    }
+
     public void setTipoOcorencia(String tipoOcorencia) {
         this.tipoOcorencia = tipoOcorencia;
     }
 
-    public void setVotos(Integer votos) {
-        this.votos = votos;
+    public String getSituacao() {
+        return situacao;
     }
 
-    public void setCriador(Usuario criador) {
-        this.usuario = criador;
+    public void setSituacao(String situacao) {
+        this.situacao = situacao;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public List<Voto> getVotos() {
+        return votos;
+    }
+
+    public void setVotos(List<Voto> votos) {
+        this.votos = votos;
     }
 }
