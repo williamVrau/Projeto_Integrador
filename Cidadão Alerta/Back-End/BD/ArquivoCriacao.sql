@@ -19,6 +19,7 @@ CREATE TABLE Pontos (
     tipo_ocorencia VARCHAR(100),
     data_criacao DATE,
     situacao VARCHAR(100),
+    urlImagen VARCHAR(500),
     usuario_id INT,
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );

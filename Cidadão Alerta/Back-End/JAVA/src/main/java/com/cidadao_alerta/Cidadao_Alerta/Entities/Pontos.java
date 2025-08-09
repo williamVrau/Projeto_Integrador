@@ -19,6 +19,7 @@ public class Pontos {
     private String tipoOcorencia;
     private LocalDate dataCriacao;
     private String situacao;
+    private String urlImagen;
 
     @ManyToOne()
     @JoinColumn(name = "usuario_id")
@@ -46,6 +47,14 @@ public class Pontos {
 
     public String getDescription() {
         return description;
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
     }
 
     public void setDescription(String description) {

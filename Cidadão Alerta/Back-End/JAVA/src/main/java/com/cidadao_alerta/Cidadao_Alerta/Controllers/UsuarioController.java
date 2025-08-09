@@ -25,14 +25,5 @@ public class UsuarioController {
         }
         return lista;
     }
-    @PostMapping("/Usuarios")
-    public UsuarioGetPostDTO criarUsuario (@RequestBody UsuarioPostDTO usuario){
-        Usuario novoUsuario = new Usuario();
-        novoUsuario.setEmail(usuario.getEmail());
-        novoUsuario.setNome(usuario.getNome());
-        novoUsuario.setSenha(usuario.getSenha());
-        this.usuarioRepositories.save(novoUsuario);
-        return  new UsuarioGetPostDTO(novoUsuario);
-    }
 
 }
