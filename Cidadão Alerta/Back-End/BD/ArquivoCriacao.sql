@@ -2,34 +2,30 @@
 CREATE SCHEMA IF NOT EXISTS cidadao_alerta;
 USE cidadao_alerta;
 
-CREATE TABLE Usuario (
+-- Criação da tabela usuario
+CREATE TABLE usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
     senha VARCHAR(255) NOT NULL,
-    classe VARCHAR(50) NOT NULL DEFAULT 'Usuario'
+    classe VARCHAR(50)
 );
 
-CREATE TABLE Pontos (
+-- Criação da tabela pontos
+CREATE TABLE pontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    name VARCHAR(100) NOT NULL,
     description TEXT,
-    lat DOUBLE,
-    lng DOUBLE,
+    lat DOUBLE NOT NULL,
+    lng DOUBLE NOT NULL,
     tipo_ocorencia VARCHAR(100),
-    data_criacao DATE,
-    situacao VARCHAR(100),
-    urlImagen VARCHAR(500),
+    votos INT DEFAULT 0,
     usuario_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
 );
+set sql_safe_updates = 0;
+DELETE FROM usuario
+WHERE nome = 'aria';
+DELETE FROM usuario;
 
-CREATE TABLE Voto (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    data_criacao DATE,
-    usuario_id INT,
-    pontos_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
-    FOREIGN KEY (pontos_id) REFERENCES Pontos(id)
-);
-select * from usuario
+select * From Usuario;

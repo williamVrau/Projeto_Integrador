@@ -11,9 +11,9 @@
     <h1>Cidadão Alerta</h1>
     <nav>
       <span id="nomeUsuario"></span>
-      <a href="index.html" target="_blank">Pagina Inicial</a>
-      <a id="loginLink" href="login.html" target="_blank">Login</a>
-      <a id="registroLink" href="registro.html" target="_blank">Registrar</a>
+      <a href="index.html" target="_self">Pagina Inicial</a>
+      <a id="loginLink" href="login.html" target="_self">Login</a>
+      <a id="registroLink" href="registro.html" target="_self">Registrar</a>
       <a href="ocorrencia.html">ocorrencia</a>
       <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
     </nav>
@@ -28,5 +28,20 @@
     </section>
   <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
   <script src="JS/usuarioJS.js"></script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+  const emailSalvo = localStorage.getItem("tempEmail");
+  const senhaSalva = localStorage.getItem("tempSenha");
+
+  if (emailSalvo && senhaSalva) {
+    document.getElementById('loginEmail').value = emailSalvo;
+    document.getElementById('loginSenha').value = senhaSalva;
+
+    // Remove do localStorage para não ficar guardado
+    localStorage.removeItem("tempEmail");
+    localStorage.removeItem("tempSenha");
+  }
+});
+</script>
 </body>
 </html>

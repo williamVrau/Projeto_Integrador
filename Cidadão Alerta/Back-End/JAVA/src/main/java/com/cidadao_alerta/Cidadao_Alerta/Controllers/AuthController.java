@@ -34,17 +34,19 @@ public class AuthController {
     public Usuario criarUsuario(@RequestBody Usuario usuario) {
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return this.usuarioRepository.save(usuario);
+
     }
 
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request) {
         UserDetails user = userDetailsService.loadUserByUsername(request.email);
+        Usuario usuarioEmail = this.usuarioRepository.findByEmail(request.email).get();
 
-        if (!passwordEncoder.matches(request.password, user.getPassword())) {
+        if (!passwordEncoder.matches(request.senha, user.getPassword())) {
             throw new BadCredentialsException("Senha inválida");
         }
 
         String token = jwtService.generateToken(user);
-        return new LoginResponse(token);
+        return new LoginResponse(token, usuarioEmail);
     }
 }

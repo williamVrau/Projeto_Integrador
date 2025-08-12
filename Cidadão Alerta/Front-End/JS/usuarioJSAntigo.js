@@ -1,82 +1,53 @@
+//Função de Login local usando localStorage
 function login() {
   const email = document.getElementById('loginEmail').value;
   const senha = document.getElementById('loginSenha').value;
-
-  if (!email || !senha){
-    alert ("Sem Email ou Senha")
-  }else{
-
-  fetch('http://localhost:8080/auth/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, senha })
-  })
-  .then((data) => data.json())
-    .then((response) => {
-      console.log(response);
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("nome", response.nome);
-      localStorage.setItem("email", response.email);
-      window.location.href = "index.html";
-      atualizarEstadoLogin()
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Usuario ou senha incorretos");
-    });
-    
-}
+  logar(email, senha)
 }
 
+//Função de Registro local usando localStorage
 function registrar() {
   const nome = document.getElementById('regNome').value;
   const email = document.getElementById('regEmail').value;
   const senha = document.getElementById('regSenha').value;
 
-  fetch('http://localhost:8080/auth/register', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ nome, email, senha })
-  })
-  .then((data) => data.json())
-    .then((response) => {
-      console.log(response);
-       // Salva email e senha temporariamente para o login
-      localStorage.setItem("tempEmail", email);
-      localStorage.setItem("tempSenha", senha);
-      // Redireciona para login.html
-      window.location.href = "login.html";
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Usuario ou senha incorretos");
-    });
-
+  
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  if (usuarios.find(u => u.email === email)) {
+    alert("Email já registrado.");
+    return;
+  }
+  const novoUsuario = { nome, email, senha };
+  usuarios.push(novoUsuario);
+  localStorage.setItem("usuarios", JSON.stringify(usuarios));
+  alert("Usuário cadastrado com sucesso!");
+  logar(email, senha)
+  
 }
 
 //Logout e atualização do estado do botão "Sair"
 function logout() {
-  localStorage.removeItem('token');
+  localStorage.removeItem('usuarioLogado');
   alert("Você saiu da conta.");
   atualizarEstadoLogin();
+  showSection('login');
 }
 
 
 
 //Exibe ou esconde botão "Sair" conforme status de login
 function atualizarEstadoLogin() {
-  const token = JSON.parse(localStorage.getItem('token'));
-  const nomeSalvo = localStorage.getItem('nome');
+  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
   const logoutBtn = document.getElementById('logoutBtn');
   const loginLink = document.getElementById('loginLink');
   const registroLink = document.getElementById('registroLink');
   const nomeUsuario = document.getElementById('nomeUsuario');
 
-  if (token) {
+  if (usuario) {
     if (logoutBtn) logoutBtn.style.display = 'inline-block';
     if (loginLink) loginLink.style.display = 'none';
     if (registroLink) registroLink.style.display = 'none';
-    if (nomeUsuario) nomeUsuario.textContent = `Bem-vindo, ${nomeSalvo}`;
+    if (nomeUsuario) nomeUsuario.textContent = `Bem-vindo, ${usuario.nome}`;
   } else {
     if (logoutBtn) logoutBtn.style.display = 'none';
     if (loginLink) loginLink.style.display = 'inline';
@@ -85,6 +56,18 @@ function atualizarEstadoLogin() {
   }
 }
 
+function logar (email, senha){
+  const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+  const user = usuarios.find(u => u.email === email && u.senha === senha);
+  if (user) {
+    alert("Logado com sucesso: " + user.nome);
+    localStorage.setItem('usuarioLogado', JSON.stringify(user));
+    atualizarEstadoLogin();
+  } else {
+    alert("Usuário ou senha inválidos.");
+  }
+
+}
 function showSection(id) {
   const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
 
