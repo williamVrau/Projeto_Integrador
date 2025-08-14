@@ -32,6 +32,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public Usuario criarUsuario(@RequestBody Usuario usuario) {
+        if (this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()){
+            throw new BadCredentialsException("Email em Uso");
+        }
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return this.usuarioRepository.save(usuario);
 

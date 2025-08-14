@@ -19,7 +19,7 @@ public class Pontos {
     private String tipoOcorencia;
     private LocalDate dataCriacao;
     private String situacao;
-    private String urlImagen;
+    private String urlImagen = "Usuario";
 
     @ManyToOne()
     @JoinColumn(name = "usuario_id")

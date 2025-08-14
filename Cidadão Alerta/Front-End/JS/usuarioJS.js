@@ -1,11 +1,9 @@
 function login() {
   const email = document.getElementById('loginEmail').value;
   const senha = document.getElementById('loginSenha').value;
-
   if (!email || !senha){
     alert ("Sem Email ou Senha")
   }else{
-
   fetch('http://localhost:8080/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -23,10 +21,8 @@ function login() {
     .catch((error) => {
       console.log(error);
       alert("Usuario ou senha incorretos");
-    });
-    
-}
-}
+    });  
+}}
 
 function registrar() {
   const nome = document.getElementById('regNome').value;
@@ -49,54 +45,48 @@ function registrar() {
     })
     .catch((error) => {
       console.log(error);
-      alert("Usuario ou senha incorretos");
+      alert("Email Ja Cadastrado");
+      localStorage.clear();
     });
-
 }
 
 //Logout e atualização do estado do botão "Sair"
 function logout() {
+  // Remove dados de autenticação
   localStorage.removeItem('token');
+  localStorage.removeItem('nome'); 
+  localStorage.removeItem('email'); 
+
+  // Feedback para o usuário
   alert("Você saiu da conta.");
+
+  // Atualiza a interface
   atualizarEstadoLogin();
 }
 
-
-
-//Exibe ou esconde botão "Sair" conforme status de login
+// Exibe ou esconde botão "Sair" conforme status de login
 function atualizarEstadoLogin() {
-  const token = JSON.parse(localStorage.getItem('token'));
+  const token = localStorage.getItem('token'); // não usar JSON.parse aqui
   const nomeSalvo = localStorage.getItem('nome');
-  const logoutBtn = document.getElementById('logoutBtn');
-  const loginLink = document.getElementById('loginLink');
-  const registroLink = document.getElementById('registroLink');
+
+  const logoutBtn   = document.getElementById('logoutBtn');
+  const loginLink   = document.getElementById('loginLink');
+  const registroLink= document.getElementById('registroLink');
   const nomeUsuario = document.getElementById('nomeUsuario');
 
-  if (token) {
-    if (logoutBtn) logoutBtn.style.display = 'inline-block';
-    if (loginLink) loginLink.style.display = 'none';
+  // Considera autenticado se há uma string não vazia/diferente de "null"/"undefined"
+  const autenticado = !!(token && token !== 'null' && token !== 'undefined' && token.trim() !== '');
+
+  if (autenticado) {
+    if (logoutBtn)    logoutBtn.style.display    = 'inline-block';
+    if (loginLink)    loginLink.style.display    = 'none';
     if (registroLink) registroLink.style.display = 'none';
-    if (nomeUsuario) nomeUsuario.textContent = `Bem-vindo, ${nomeSalvo}`;
+    if (nomeUsuario)  nomeUsuario.textContent    = `Bem-vindo, ${nomeSalvo?.trim() || 'Usuário'}`;
   } else {
-    if (logoutBtn) logoutBtn.style.display = 'none';
-    if (loginLink) loginLink.style.display = 'inline';
+    if (logoutBtn)    logoutBtn.style.display    = 'none';
+    if (loginLink)    loginLink.style.display    = 'inline';
     if (registroLink) registroLink.style.display = 'inline';
-    if (nomeUsuario) nomeUsuario.textContent = '';
-  }
-}
-
-function showSection(id) {
-  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
-
-  document.getElementById(id).classList.add('active');
-  //Inicializa o mapa apenas uma vez
-  if (id === 'ocorrencias' && !mapInitialized) {
-    setTimeout(() => {
-      inicializarMapa();
-      loadPointsList();
-      map.invalidateSize();
-      mapInitialized = true;
-    }, 100);
+    if (nomeUsuario)  nomeUsuario.textContent    = '';
   }
 }
 

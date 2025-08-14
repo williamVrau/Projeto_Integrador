@@ -1,7 +1,6 @@
 package com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario;
 
 import com.cidadao_alerta.Cidadao_Alerta.Entities.Usuario;
-import org.antlr.v4.runtime.misc.NotNull;
 
 public class UsuarioGetDTO {
     private String nome;

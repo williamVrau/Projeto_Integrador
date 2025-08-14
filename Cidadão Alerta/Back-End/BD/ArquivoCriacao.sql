@@ -1,31 +1,41 @@
 -- Criação do schema
 CREATE SCHEMA IF NOT EXISTS cidadao_alerta;
 USE cidadao_alerta;
-
--- Criação da tabela usuario
-CREATE TABLE usuario (
+CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
     senha VARCHAR(255) NOT NULL,
-    classe VARCHAR(50)
+    classe VARCHAR(50) NOT NULL DEFAULT 'Usuario'
 );
 
--- Criação da tabela pontos
-CREATE TABLE pontos (
+CREATE TABLE Pontos (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(255) NOT NULL,
     description TEXT,
-    lat DOUBLE NOT NULL,
-    lng DOUBLE NOT NULL,
+    lat DOUBLE,
+    lng DOUBLE,
     tipo_ocorencia VARCHAR(100),
-    votos INT DEFAULT 0,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    situacao VARCHAR(100),
+    url_imagen VARCHAR(500),
     usuario_id INT,
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id) ON DELETE CASCADE
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
+
+CREATE TABLE Voto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    usuario_id INT,
+    pontos_id INT,
+    FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
+    FOREIGN KEY (pontos_id) REFERENCES Pontos(id)
+);
+
+
 set sql_safe_updates = 0;
 DELETE FROM usuario
 WHERE nome = 'aria';
 DELETE FROM usuario;
 
-select * From Usuario;
+select * From pontos;

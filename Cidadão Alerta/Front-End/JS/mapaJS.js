@@ -24,15 +24,30 @@ function inicializarMapa() {
 
   map.on('click', onMapClick);
 
-  const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
-  savedPoints.forEach(point => addMarkerToMap(point));
+  fetch('http://localhost:8080/Pontos', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  .then((data) => data.json())
+    .then((response) => {
+      console.log(response)
+      const savedPoints = response || [];
+      savedPoints.forEach(point => addMarkerToMap(point));
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Algo deu Errado");
+    });  
+
+  
 }
 
 //Clique no Mapa para adicionar ocorrência 
 function onMapClick(e) {
-  const usuario = JSON.parse(localStorage.getItem('usuarioLogado'));
+  const token = localStorage.getItem('token'); // não usar JSON.parse aqui
+  const autenticado = !!(token && token !== 'null' && token !== 'undefined' && token.trim() !== '');
 
-  if (!usuario) {
+  if (!autenticado) {
     L.popup()
       .setLatLng(e.latlng)
       .setContent("<strong>⚠️ Você precisa estar logado para registrar uma ocorrência.</strong>")
@@ -75,59 +90,46 @@ function onMapClick(e) {
       if (imageFile) {
         const reader = new FileReader();
         reader.onloadend = function () {
-          savePoint(name, description, latlng, reader.result, 1,tipoOcorrencia);
+          savePoint(name, description, latlng,tipoOcorrencia);
         };
         reader.readAsDataURL(imageFile);
       } else {
-        savePoint(name, description, latlng, '', 1,tipoOcorrencia);
+        savePoint(name, description, latlng,tipoOcorrencia);
       }
     });
   }, 100);
 }
 
 //Salvar novo ponto
-function savePoint(name, description, latlng, imageUrl, votes = 1, tipoOcorrencia) {
-  const usuarioLogado = JSON.parse(localStorage.getItem('usuarioLogado'));
-  const nomeCriador = usuarioLogado ? usuarioLogado.nome : 'Anônimo';
+function savePoint(name, description, latlng, tipoOcorrencia) {
+  const nomeCriador = localStorage.getItem('email');
+  const token = localStorage.getItem('token');
 
-  const newPoint = {
-    name,
+  fetch('http://localhost:8080/Ponto/criarponto', {
+    method: 'POST',
+    headers: { Authorization: "Bearer " + token, 
+      'Content-Type': 'application/json', },
+    body: JSON.stringify({ name,
     description,
     lat: latlng.lat,
     lng: latlng.lng,
-    imageUrl: imageUrl || '',
     tipoOcorrencia,
-    votes,
-    criador: nomeCriador
-  };
+    situacao:'aberta',
+    criador: nomeCriador }),
+  })
+  .then((data) => data.json())
+    .then((response) => {
+      addMarkerToMap(response)
+      loadPointsList();
+      map.closePopup();
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Usuario ou senha incorretos");
+    });
 
-  const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
-  savedPoints.push(newPoint);
-  localStorage.setItem('mapPoints', JSON.stringify(savedPoints));
-  addMarkerToMap(newPoint);
-  loadPointsList();
-  map.closePopup();
 }
 
-//Cria ícone colorido para marcador do mapa
-function createColoredIcon(color) {
-  return new L.Icon({
-    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
-    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-  });
-}
-
-//cor do marcador com base na quantidade de votos 
-function getMarkerColor(votes) {
-  if (votes < 5) return 'blue';
-  if (votes < 10) return 'orange';
-  if (votes < 15) return 'red';
-  return 'black';
-}
 
 //Adiciona marcador ao mapa
 function addMarkerToMap(point) {
@@ -161,12 +163,37 @@ function votePoint(lat, lng) {
     votoSpan.textContent = savedPoints[pointIndex].votes;
   }
 }
+function createColoredIcon(color) {
+  return new L.Icon({
+    iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
+    shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+  });
+}
+
+//cor do marcador com base na quantidade de votos 
+function getMarkerColor(votes) {
+  if (votes < 5) return 'blue';
+  if (votes < 10) return 'orange';
+  if (votes < 15) return 'red';
+  return 'black';
+}
 
 // Carrega e exibe lista de pontos salvos no localStorage
 function loadPointsList() {
-  const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
 
-  savedPoints.sort((a, b) => {
+
+  fetch('http://localhost:8080/Pontos', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  .then((data) => data.json())
+    .then((response) => {
+      const savedPoints = response || [];
+      savedPoints.sort((a, b) => {
     if (b.votes === a.votes) {
       return a.name.localeCompare(b.name);
     }
@@ -193,6 +220,18 @@ function loadPointsList() {
   });
 
   listContainer.appendChild(ul);
+
+  
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Algo deu Errado");
+    });
+  
+
+
+
+  
 }
 window.addEventListener('DOMContentLoaded', () => {
   loadPointsList();
