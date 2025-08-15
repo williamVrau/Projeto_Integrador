@@ -30,8 +30,9 @@ public class PontoController {
         novoPonto.setDescription(pontos.getDescription());
         novoPonto.setLat(pontos.getLat());
         novoPonto.setLng(pontos.getLng());
-        novoPonto.setTipoOcorencia(pontos.getTipoOcorencia());
-        novoPonto.setSituacao(pontos.getSituacao());
+        novoPonto.setTipoOcorrencia(pontos.getTipoOcorrencia());
+        System.out.println(novoPonto);
+
         return this.pontosRepositories.save(novoPonto);
     }
     @GetMapping("/Pontos")

@@ -15,9 +15,9 @@ CREATE TABLE Pontos (
     description TEXT,
     lat DOUBLE,
     lng DOUBLE,
-    tipo_ocorencia VARCHAR(100),
+    tipo_ocorrencia VARCHAR(100),
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    situacao VARCHAR(100),
+    situacao VARCHAR(100) DEFAULT "Aberta" ,
     url_imagen VARCHAR(500),
     usuario_id INT,
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
@@ -34,8 +34,5 @@ CREATE TABLE Voto (
 
 
 set sql_safe_updates = 0;
-DELETE FROM usuario
-WHERE nome = 'aria';
-DELETE FROM usuario;
 
 select * From pontos;

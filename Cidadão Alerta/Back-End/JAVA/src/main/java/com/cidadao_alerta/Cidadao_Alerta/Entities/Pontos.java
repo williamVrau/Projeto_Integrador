@@ -16,9 +16,9 @@ public class Pontos {
     private String description;
     private Double lat;
     private Double lng;
-    private String tipoOcorencia;
-    private LocalDate dataCriacao;
-    private String situacao;
+    private String tipoOcorrencia;
+    private LocalDate dataCriacao = LocalDate.now();
+    private String situacao = "Aberta";
     private String urlImagen = "Usuario";
 
     @ManyToOne()
@@ -85,12 +85,12 @@ public class Pontos {
         this.dataCriacao = dataCriacao;
     }
 
-    public String getTipoOcorencia() {
-        return tipoOcorencia;
+    public String getTipoOcorrencia() {
+        return tipoOcorrencia;
     }
 
-    public void setTipoOcorencia(String tipoOcorencia) {
-        this.tipoOcorencia = tipoOcorencia;
+    public void setTipoOcorrencia(String tipoOcorencia) {
+        this.tipoOcorrencia = tipoOcorencia;
     }
 
     public String getSituacao() {

@@ -11,7 +11,7 @@ public class PontosPostDTO{
     private String description;
     private Double lat;
     private Double lng;
-    private String tipoOcorencia;
+    private String tipoOcorrencia;
     private String situacao;
     private String criador;
 
@@ -31,8 +31,8 @@ public class PontosPostDTO{
         return lng;
     }
 
-    public String getTipoOcorencia() {
-        return tipoOcorencia;
+    public String getTipoOcorrencia() {
+        return tipoOcorrencia;
     }
 
     public String getSituacao() {
