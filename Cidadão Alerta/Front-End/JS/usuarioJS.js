@@ -1,3 +1,4 @@
+
 function login() {
   const email = document.getElementById('loginEmail').value;
   const senha = document.getElementById('loginSenha').value;

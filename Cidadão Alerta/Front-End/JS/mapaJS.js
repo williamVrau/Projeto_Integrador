@@ -8,6 +8,30 @@ setTimeout(() => {
       mapInitialized = true;
     }, 100);
 
+
+
+    // Classe Ponto
+class Ponto {
+  constructor({ id, name, description, lat, lng, tipoOcorrencia, dataCriacao, situacao, urlImagen, usuario, votos }) {
+    this.id = id ?? null;
+    this.name = name ?? "Sem nome";
+    this.description = description ?? "";
+    this.lat = lat ?? 0;
+    this.lng = lng ?? 0;
+    this.tipoOcorrencia = tipoOcorrencia ?? "Não informado";
+    this.dataCriacao = dataCriacao ?? new Date().toISOString().split("T")[0];
+    this.situacao = situacao ?? "Aberta";
+    this.urlImagen = urlImagen ?? null;
+    this.usuario = usuario ?? null;
+    this.votos = votos ?? [];
+  }
+
+  // Exemplo: quantidade de votos
+  get totalVotos() {
+    return this.votos.length;
+  }
+}
+
 //Inicialização do Mapa
 function inicializarMapa() {
   map = L.map('map').setView([-26.8233, -49.2706], 13);
@@ -31,8 +55,8 @@ function inicializarMapa() {
   .then((data) => data.json())
     .then((response) => {
       console.log(response)
-      const savedPoints = response || [];
-      savedPoints.forEach(point => addMarkerToMap(point));
+      const pontos = response.map(p => new Ponto(p));
+      pontos.forEach(ponto => addMarkerToMap(ponto))
     })
     .catch((error) => {
       console.log(error);
@@ -44,7 +68,7 @@ function inicializarMapa() {
 
 //Clique no Mapa para adicionar ocorrência 
 function onMapClick(e) {
-  const token = localStorage.getItem('token'); // não usar JSON.parse aqui
+  const token = localStorage.getItem('token');
   const autenticado = !!(token && token !== 'null' && token !== 'undefined' && token.trim() !== '');
 
   if (!autenticado) {
@@ -117,57 +141,62 @@ function savePoint(name, description, latlng, tipoOcorrencia) {
     situacao:'aberta',
     criador: nomeCriador }),
   })
-  .then((data) => data.json())
-    .then((response) => {
-      addMarkerToMap(response)
+   .then((data) => data.json())
+  .then((response) => {
+      addMarkerToMap(response);
+
+      // 👇 Assim que criar o ponto, já vota nele 1 vez
+      votarAPI(response.id);
+
       loadPointsList();
       map.closePopup();
-    })
-    .catch((error) => {
-      console.log(error);
-      alert("Usuario ou senha incorretos");
-    });
-
+  })
+  .catch((error) => {
+    console.log(error);
+    alert("Erro ao criar ponto");
+  });
 }
 
 
-function addMarkerToMap(point) {
-  // Garantir valores padrão para evitar undefined
-  const votos = point.votes ?? 0;
-  const imageUrl = point.imageUrl || null;
-  const tipoOcorrencia = point.tipoOcorrencia || 'Não informado';
+function addMarkerToMap(ponto) {
+  const icon = createColoredIcon(getMarkerColor(ponto.totalVotos));
+  
+  const marker = L.marker([ponto.lat, ponto.lng], { icon }).addTo(map);
 
-  // Criar ícone colorido com base nos votos
-  const icon = createColoredIcon(getMarkerColor(votos));
-
-  // Criar marcador no mapa
-  const marker = L.marker([point.lat, point.lng], { icon }).addTo(map);
-
-  // Conteúdo do popup com valores seguros
   const popupContent = `
-    <strong>${point.name || 'Sem nome'}</strong><br>
-    <span>${point.dataCriacao}</span>
-    ${point.description || ''}<br>
-    ${imageUrl ? `<img src="${imageUrl}" width="100" /><br>` : ''}
-    <strong>Votos:</strong> <span id="votes-${point.lat}-${point.lng}">${votos}</span><br>
-    <strong>${tipoOcorrencia}</strong><br>
-    <button onclick="votePoint(${point.lat}, ${point.lng})">👍 Votar</button>
+    <strong>${ponto.name}</strong><br>
+    <span>${ponto.dataCriacao}</span><br>
+    ${ponto.description}<br>
+    ${ponto.urlImagen ? `<img src="${ponto.urlImagen}" width="100" /><br>` : ""}
+    <strong>Votos:</strong> ${ponto.totalVotos}<br>
+    <strong>${ponto.tipoOcorrencia}</strong><br>
+    <button onclick="votarAPI(${ponto.id})">👍 Votar</button>
   `;
 
   marker.bindPopup(popupContent);
 }
 // Função de voto
-function votePoint(lat, lng) {
-  const savedPoints = JSON.parse(localStorage.getItem('mapPoints')) || [];
-  const pointIndex = savedPoints.findIndex(p => p.lat === lat && p.lng === lng);
-  if (pointIndex !== -1) {
-    savedPoints[pointIndex].votes += 1;
-    localStorage.setItem('mapPoints', JSON.stringify(savedPoints));
-    loadPointsList(); // se necessário para atualizar a lista de ocorrências
+function votarAPI(pontoId) {
+  const token = localStorage.getItem('token');
+  const nomeCriador = localStorage.getItem('email');
 
-    const votoSpan = document.getElementById("votes-" + savedPoints[pointIndex].lat + "-" + savedPoints[pointIndex].lng);
-    votoSpan.textContent = savedPoints[pointIndex].votes;
-  }
+  fetch(`http://localhost:8080/Voto/${pontoId}`, {
+    method: 'POST',
+    headers: { 
+      Authorization: "Bearer " + token, 
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+    nomeUsuario: nomeCriador }),
+  })
+  .then(res => res.json())
+  .then(response => {
+    console.log("Voto registrado");
+
+    // Atualiza a lista de pontos
+    loadPointsList();
+  })
+  .catch(err => console.error("Erro ao votar:", err));
 }
 function createColoredIcon(color) {
   return new L.Icon({
@@ -194,23 +223,17 @@ function loadPointsList() {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
-    .then((data) => data.json())
-    .then((response) => {
-      // Garantir valores padrão para todos os campos
-      const savedPoints = (response || []).map(p => ({
-        votes: p.votes ?? 0,
-        dataCriacao: p.dataCriacao,
-        imageUrl: p.imageUrl || null,
-        tipoOcorrencia: p.tipoOcorencia || 'Não informado',
-        ...p
-      }));
+    .then(res => res.json())
+    .then(response => {
+      // Transforma cada retorno da API em objeto Ponto
+      const savedPoints = (response || []).map(p => new Ponto(p));
 
       // Ordenar por votos (desc) e depois por nome (asc)
       savedPoints.sort((a, b) => {
-        if (b.votes === a.votes) {
+        if (b.totalVotos === a.totalVotos) {
           return a.name.localeCompare(b.name);
         }
-        return b.votes - a.votes;
+        return b.totalVotos - a.totalVotos;
       });
 
       // Montar lista no HTML
@@ -223,14 +246,14 @@ function loadPointsList() {
       }
 
       const ul = document.createElement('ul');
-      savedPoints.forEach((point) => {
+      savedPoints.forEach(ponto => {
         const li = document.createElement('li');
         li.innerHTML = `
-          <Strong><br>Data da Criacao: ${point.dataCriacao}<br>
-          ${point.name}</strong> - Votos: ${point.votes}<br>
-          ${point.description || ''}<br>
-
-          ${point.imageUrl ? `<img src="${point.imageUrl}" width="100" /><br>` : ''}
+          <strong>${ponto.name}</strong><br>
+          Data da Criação: ${ponto.dataCriacao}<br>
+          <strong>Votos:</strong> ${ponto.totalVotos}<br>
+          ${ponto.description || ''}<br>
+          ${ponto.urlImagen ? `<img src="${ponto.urlImagen}" width="100" /><br>` : ''}
         `;
         ul.appendChild(li);
       });
@@ -238,8 +261,8 @@ function loadPointsList() {
       listContainer.appendChild(ul);
     })
     .catch((error) => {
-      console.log(error);
-      alert("Algo deu Errado ao carregar os pontos");
+      console.error(error);
+      alert("Algo deu errado ao carregar os pontos");
     });
 }
 

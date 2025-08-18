@@ -29,7 +29,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/auth/login", "/auth/register","/Pontos").permitAll()  // LIBERA login e register
+                .requestMatchers("/auth/login", "/auth/register","/Pontos","/Voto/{pontoId}").permitAll()  // LIBERA login e register
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

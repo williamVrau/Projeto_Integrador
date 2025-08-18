@@ -10,7 +10,7 @@ public class Voto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private LocalDate dataCriacao;
+    private LocalDate dataCriacao = LocalDate.now();
 
     @ManyToOne()
     @JoinColumn(name = "usuario_id")
