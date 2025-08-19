@@ -4,25 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cidadão Alerta</title>
-  <link rel="stylesheet" href="CSS/styles.css" />
+
+  <!-- Link para o CSS e Icons -->
+  <link rel="stylesheet" href="CSS/index.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
 </head>
 <body>
   <header>
-    <h1>Cidadão Alerta</h1>
     <nav>
       <span id="nomeUsuario"></span>
-      <a href="index.html" target="_self">Pagina Inicial</a>
-      <a id="loginLink" href="login.html" target="_self">Login</a>
-      <a id="registroLink" href="registro.html" target="_self">Registrar</a>
-      <a href="ocorrencia.html">ocorrencia</a>
+      <a href="index.html" target="_self" class="pag-init">Cidadão Alerta</a>
+      <a id="loginLink" href="login.html" target="_self" class="loginb">Login</a>
       <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
     </nav>
   </header>
 
   <main>
-    <img src="IMGs/mapa-sc-municipios.jpg" alt="Mapa de Santa Catarina">
-    
+    <section>
+      <div class="sec1">
+      <h3> Nós somos o canal à população </h2>
+      <h1> A Melhor Plataforma de Gestão de Ocorrências Urbanas </h1>
+      <h4> <strong> A sua voz tem importância e é ouvida </strong>, basta um único post. <br> Juntos somos mais fortes. </h3>
+      </div>
+  </section>
+    <button class="register" onclick="location.href='registro.html'"> Se Registre </button>
+
   </main>
 
   <!-- Scripts externos: Leaflet (mapa) e lógica do app -->

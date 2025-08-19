@@ -4,28 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cidadão Alerta</title>
-  <link rel="stylesheet" href="CSS/styles.css" />
+  
+  <!-- Link para o CSS e Icons -->
+    <link rel="stylesheet" href="CSS/login.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  
 </head>
+
 <body>
   <header>
-    <h1>Cidadão Alerta</h1>
     <nav>
       <span id="nomeUsuario"></span>
-      <a href="index.html" target="_self">Pagina Inicial</a>
-      <a id="loginLink" href="login.html" target="_self">Login</a>
-      <a id="registroLink" href="registro.html" target="_self">Registrar</a>
-      <a href="ocorrencia.html">ocorrencia</a>
+      <a href="index.html" target="_self">Cidadão Alerta</a>
+      <a id="ocorrencia.html" href="ocorrencia.html" target="_self" class="ocorrenciab" > Ocorrências</a>
       <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
     </nav>
   </header>
-  <main>
-    <!-- Seção de login com campos de e-mail e senha -->
-    <section id="login">
-      <h2>Login</h2>
-      <input type="email" id="loginEmail" placeholder="Email" />
-      <input type="password" id="loginSenha" placeholder="Senha" />
-      <button onclick="login()">Entrar</button>
-    </section>
+  
+   <main class="container">
+      <form>
+        <h2>Login Cidadão Alerta</h2>
+        <div class="input-box">
+          <input type="email" id="loginEmail" placeholder="Email" />
+          <i class="bx bxs-user"></i>
+        </div>
+        
+        <div class="input-box">
+          <input type="password" id="loginSenha" placeholder="Senha" />
+          <i class="bx bxs-lock-alt"></i>
+        </div>
+
+        <div class="register-link">
+            <p> Não tem uma conta? <a href="registro.html">Cadastre-se</a></p>
+          </div>
+
+      <button type="button" class="login" onclick="login()">Entrar</button>
+    </form>
+  </main>
+
   <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
   <script src="JS/usuarioJS.js"></script>
   <script>
