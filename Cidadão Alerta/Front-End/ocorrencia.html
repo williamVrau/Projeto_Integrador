@@ -23,12 +23,23 @@
     </nav>
   </header>
   <main>
+
     <!-- Seção onde o mapa e os pontos de ocorrência são exibidos -->
     <section id="ocorrencias">
       <h2>Registrar Ocorrência</h2>
 
       <!-- Mapa interativo para registrar ocorrências clicando -->
       <div id="map"></div>
+
+
+      <label for="filtroTipo">Filtrar por tipo:</label>
+<select id="filtroTipo" onchange="filtrarMapa(this.value)">
+  <option value="">-- Todos --</option>
+  <option value="infraestrutura">Infraestrutura</option>
+  <option value="cabos-rompidos">Cabos Rompidos</option>
+  <option value="lixo">Lixo</option>
+  <option value="melhorias">Melhorias</option>
+</select>
 
       <!-- Lista de ocorrências salvas pelo usuário -->
       <div id="pointsList" style="padding: 20px; background-color: #f9f9f9; margin-top: 20px;">

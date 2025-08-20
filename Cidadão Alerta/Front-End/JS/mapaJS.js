@@ -1,6 +1,7 @@
 //Inicialização de Variáveis
 let mapInitialized = false;
 let map;
+let markers = [];
 setTimeout(() => {
       inicializarMapa();
       loadPointsList();
@@ -144,7 +145,8 @@ function savePoint(name, description, latlng, tipoOcorrencia) {
 function addMarkerToMap(ponto) {
   const icon = createColoredIcon(getMarkerColor(ponto.totalVotos));
   const marker = L.marker([ponto.lat, ponto.lng], { icon }).addTo(map);
-  const popupContent = `
+
+  marker.bindPopup(`
     <strong>${ponto.name}</strong><br>
     <span>${ponto.dataCriacao}</span><br>
     ${ponto.description}<br>
@@ -152,8 +154,23 @@ function addMarkerToMap(ponto) {
     <strong>Votos:</strong> ${ponto.totalVotos}<br>
     <strong>${ponto.tipoOcorrencia}</strong><br>
     <button onclick="votarAPI(${ponto.id})">👍 Votar</button>
-  `;
-  marker.bindPopup(popupContent);
+  `);
+
+  markers.push({ marker, tipo: ponto.tipoOcorrencia });
+}
+
+// Função de filtro no mapa
+function filtrarMapa(tipoFiltro) {
+  markers.forEach(obj => {
+    if (tipoFiltro === "" || obj.tipo === tipoFiltro) {
+      map.addLayer(obj.marker);
+    } else {
+      map.removeLayer(obj.marker);
+    }
+  });
+
+  // Também recarrega a lista filtrada
+  loadPointsList(tipoFiltro);
 }
 // Função de voto
 function votarAPI(pontoId) {
