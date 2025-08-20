@@ -7,10 +7,7 @@ setTimeout(() => {
       map.invalidateSize();
       mapInitialized = true;
     }, 100);
-
-
-
-    // Classe Ponto
+// Classe Ponto
 class Ponto {
   constructor({ id, name, description, lat, lng, tipoOcorrencia, dataCriacao, situacao, urlImagen, usuario, votos }) {
     this.id = id ?? null;
@@ -25,29 +22,23 @@ class Ponto {
     this.usuario = usuario ?? null;
     this.votos = votos ?? [];
   }
-
   // Exemplo: quantidade de votos
   get totalVotos() {
     return this.votos.length;
   }
 }
-
 //Inicialização do Mapa
 function inicializarMapa() {
   map = L.map('map').setView([-26.8233, -49.2706], 13);
-
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
-
   map.setMinZoom(7);
   map.setMaxBounds([
     [-28.5, -53],
     [-25.5, -47]
   ]);
-
   map.on('click', onMapClick);
-
   fetch('http://localhost:8080/Pontos', {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
@@ -62,15 +53,11 @@ function inicializarMapa() {
       console.log(error);
       alert("Algo deu Errado");
     });  
-
-  
 }
-
 //Clique no Mapa para adicionar ocorrência 
 function onMapClick(e) {
   const token = localStorage.getItem('token');
   const autenticado = !!(token && token !== 'null' && token !== 'undefined' && token.trim() !== '');
-
   if (!autenticado) {
     L.popup()
       .setLatLng(e.latlng)
@@ -123,12 +110,10 @@ function onMapClick(e) {
     });
   }, 100);
 }
-
 //Salvar novo ponto
 function savePoint(name, description, latlng, tipoOcorrencia) {
   const nomeCriador = localStorage.getItem('email');
   const token = localStorage.getItem('token');
-
   fetch('http://localhost:8080/Ponto/criarponto', {
     method: 'POST',
     headers: { Authorization: "Bearer " + token, 
@@ -156,13 +141,9 @@ function savePoint(name, description, latlng, tipoOcorrencia) {
     alert("Erro ao criar ponto");
   });
 }
-
-
 function addMarkerToMap(ponto) {
   const icon = createColoredIcon(getMarkerColor(ponto.totalVotos));
-  
   const marker = L.marker([ponto.lat, ponto.lng], { icon }).addTo(map);
-
   const popupContent = `
     <strong>${ponto.name}</strong><br>
     <span>${ponto.dataCriacao}</span><br>
@@ -172,14 +153,12 @@ function addMarkerToMap(ponto) {
     <strong>${ponto.tipoOcorrencia}</strong><br>
     <button onclick="votarAPI(${ponto.id})">👍 Votar</button>
   `;
-
   marker.bindPopup(popupContent);
 }
 // Função de voto
 function votarAPI(pontoId) {
   const token = localStorage.getItem('token');
   const nomeCriador = localStorage.getItem('email');
-
   fetch(`http://localhost:8080/Voto/${pontoId}`, {
     method: 'POST',
     headers: { 
@@ -208,7 +187,6 @@ function createColoredIcon(color) {
     shadowSize: [41, 41]
   });
 }
-
 //cor do marcador com base na quantidade de votos 
 function getMarkerColor(votes) {
   if (votes < 5) return 'blue';
@@ -216,7 +194,6 @@ function getMarkerColor(votes) {
   if (votes < 15) return 'red';
   return 'black';
 }
-
 // Carrega e exibe lista de pontos salvos no localStorage
 function loadPointsList() {
   fetch('http://localhost:8080/Pontos', {
@@ -265,7 +242,6 @@ function loadPointsList() {
       alert("Algo deu errado ao carregar os pontos");
     });
 }
-
 window.addEventListener('DOMContentLoaded', () => {
   loadPointsList();
 });

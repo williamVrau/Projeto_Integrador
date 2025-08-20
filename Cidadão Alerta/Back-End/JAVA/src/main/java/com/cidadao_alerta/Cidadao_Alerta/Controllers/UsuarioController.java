@@ -25,5 +25,8 @@ public class UsuarioController {
         }
         return lista;
     }
-
+    @GetMapping("/Usuario/{emailUsuario}")
+    public Usuario perfilUsuario (@PathVariable String emailUsuario){
+        return this.usuarioRepositories.findByEmail(emailUsuario).get();
+    }
 }

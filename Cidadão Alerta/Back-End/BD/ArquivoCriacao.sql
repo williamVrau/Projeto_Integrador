@@ -35,4 +35,4 @@ CREATE TABLE Voto (
 
 set sql_safe_updates = 0;
 
-select * From pontos;
+select * From usuario;
