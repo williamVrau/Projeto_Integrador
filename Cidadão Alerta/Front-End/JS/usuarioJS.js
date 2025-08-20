@@ -74,6 +74,7 @@ function atualizarEstadoLogin() {
   const loginLink   = document.getElementById('loginLink');
   const registroLink= document.getElementById('registroLink');
   const nomeUsuario = document.getElementById('nomeUsuario');
+  const perfilLink = document.getElementById('perfilLink')
 
   // Considera autenticado se há uma string não vazia/diferente de "null"/"undefined"
   const autenticado = !!(token && token !== 'null' && token !== 'undefined' && token.trim() !== '');
@@ -82,9 +83,11 @@ function atualizarEstadoLogin() {
     if (logoutBtn)    logoutBtn.style.display    = 'inline-block';
     if (loginLink)    loginLink.style.display    = 'none';
     if (registroLink) registroLink.style.display = 'none';
+    if (perfilLink) perfilLink.style.display = 'inline'
     if (nomeUsuario)  nomeUsuario.textContent    = `Bem-vindo, ${nomeSalvo?.trim() || 'Usuário'}`;
   } else {
     if (logoutBtn)    logoutBtn.style.display    = 'none';
+    if (perfilLink) perfilLink.style.display = 'none'
     if (loginLink)    loginLink.style.display    = 'inline';
     if (registroLink) registroLink.style.display = 'inline';
     if (nomeUsuario)  nomeUsuario.textContent    = '';
