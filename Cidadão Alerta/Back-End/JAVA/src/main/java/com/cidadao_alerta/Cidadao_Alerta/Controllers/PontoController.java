@@ -1,6 +1,7 @@
 package com.cidadao_alerta.Cidadao_Alerta.Controllers;
 
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontoPutDTO;
+import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontoPutDescDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontosPostDTO;
 import com.cidadao_alerta.Cidadao_Alerta.Entities.Pontos;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.PontosRepositories;
@@ -40,10 +41,20 @@ public class PontoController {
     public List<Pontos> listarPontos (){
         return this.pontosRepositories.findAll();
     }
+
+
     @PutMapping("/Ponto/Alterar/{idPonto}")
-    public Pontos alterarPotno (@PathVariable Integer idPonto, @RequestBody PontoPutDTO situacao){
+    public Pontos alterarPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDTO situacao){
         Pontos ponto = this.pontosRepositories.findById(idPonto).get();
         ponto.setSituacao(situacao.getSituacao());
+        return this.pontosRepositories.save(ponto);
+
+    }
+
+    @PutMapping("/Ponto/AlterarDesc/{idPonto}")
+    public Pontos alterarDescPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDescDTO situacao){
+        Pontos ponto = this.pontosRepositories.findById(idPonto).get();
+        ponto.setDescription(situacao.getDescription());
         return this.pontosRepositories.save(ponto);
 
     }

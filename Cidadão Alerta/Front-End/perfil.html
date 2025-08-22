@@ -35,12 +35,22 @@
         <th>Data Criação</th>
         <th>Situação</th>
         <th>Imagem</th>
+        <th>Alterar Situacao</th>
       </tr>
     </thead>
     <tbody>
       <!-- JS vai preencher -->
     </tbody>
   </table>
+  <div id="popupDescricao" class="popup" style="display: none;">
+  <div class="popup-content">
+    <h3>Editar Descrição</h3>
+    <textarea id="novaDescricao" rows="4" style="width:100%;"></textarea>
+    <br><br>
+    <button onclick="atualizarDescricao()">Atualizar Descrição</button>
+    <button onclick="fecharPopup()">Cancelar</button>
+  </div>
+</div>
 <script src="JS/perfilJS.js">   </script>
 <script src="JS/usuarioJS.js"></script>
     

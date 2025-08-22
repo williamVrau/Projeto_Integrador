@@ -188,9 +188,8 @@ function votarAPI(pontoId) {
   .then(res => res.json())
   .then(response => {
     console.log("Voto registrado");
-
-    // Atualiza a lista de pontos
     loadPointsList();
+    recarregarMarcadores();
   })
   .catch(err => console.error("Erro ao votar:", err));
 }
@@ -258,6 +257,23 @@ function loadPointsList() {
       console.error(error);
       alert("Algo deu errado ao carregar os pontos");
     });
+
+}
+
+function recarregarMarcadores() {
+  markers.forEach(obj => map.removeLayer(obj.marker));
+  markers = [];
+
+  fetch('http://localhost:8080/Pontos', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  })
+  .then(res => res.json())
+  .then(response => {
+    const pontos = response.map(p => new Ponto(p));
+    pontos.forEach(ponto => addMarkerToMap(ponto));
+  })
+  .catch(err => console.error("Erro ao recarregar marcadores:", err));
 }
 window.addEventListener('DOMContentLoaded', () => {
   loadPointsList();
