@@ -1,5 +1,6 @@
 package com.cidadao_alerta.Cidadao_Alerta.Controllers;
 
+import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontoVotoGetDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Voto.VotoPostDTO;
 import com.cidadao_alerta.Cidadao_Alerta.Entities.Voto;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.PontosRepositories;
@@ -21,11 +22,12 @@ public class VotoController {
         this.votosRepositories = votosRepositories;
     }
     @PostMapping("/Voto/{pontoId}")
-    public Voto votarPonto(@RequestBody VotoPostDTO voto, @PathVariable Integer pontoId){
+    public PontoVotoGetDTO votarPonto(@RequestBody VotoPostDTO voto, @PathVariable Integer pontoId){
         Voto novoVoto = new Voto();
         novoVoto.setUsuario(this.usuarioRepositories.findByEmail(voto.getNomeUsuario()).get());
         novoVoto.setPontos(this.pontosRepositories.findById(pontoId).get());
-        return this.votosRepositories.save(novoVoto);
+        this.votosRepositories.save(novoVoto);
+        return new PontoVotoGetDTO(novoVoto);
 
     }
 }

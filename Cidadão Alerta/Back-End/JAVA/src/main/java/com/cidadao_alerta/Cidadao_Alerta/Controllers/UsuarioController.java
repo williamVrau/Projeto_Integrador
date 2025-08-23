@@ -1,5 +1,6 @@
 package com.cidadao_alerta.Cidadao_Alerta.Controllers;
 
+import com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario.UsuarioGETPerfilDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario.UsuarioGetDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario.UsuarioGetPostDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario.UsuarioPostDTO;
@@ -26,7 +27,8 @@ public class UsuarioController {
         return lista;
     }
     @GetMapping("/Usuario/{emailUsuario}")
-    public Usuario perfilUsuario (@PathVariable String emailUsuario){
-        return this.usuarioRepositories.findByEmail(emailUsuario).get();
+    public UsuarioGETPerfilDTO perfilUsuario (@PathVariable String emailUsuario){
+        UsuarioGETPerfilDTO usuarioGETPerfilDTO = new UsuarioGETPerfilDTO(this.usuarioRepositories.findByEmail(emailUsuario).get());
+        return usuarioGETPerfilDTO;
     }
 }

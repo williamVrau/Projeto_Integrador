@@ -19,13 +19,13 @@ async function carregarPerfil() {
     document.getElementById("nome").innerText = "Nome: " + usuario.nome;
     document.getElementById("email").innerText = "Email: " + usuario.email;
     document.getElementById("classe").innerText = "Classe: " + usuario.classe;
-    document.getElementById("qtdPontos").innerText = "Quantidade de pontos: " + usuario.pontos.length;
+    document.getElementById("qtdPontos").innerText = "Quantidade de pontos: " + usuario.listaPontos.length;
 
     // Preenche a tabela de pontos
     const tabelaBody = document.getElementById("tabelaPontos").querySelector("tbody");
     tabelaBody.innerHTML = ""; // limpa antes de preencher
 
-    usuario.pontos.forEach(ponto => {
+    usuario.listaPontos.forEach(ponto => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td>${ponto.name}</td>

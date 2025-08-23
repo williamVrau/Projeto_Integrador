@@ -1,5 +1,6 @@
 package com.cidadao_alerta.Cidadao_Alerta.Controllers;
 
+import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontoGetDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontoPutDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontoPutDescDTO;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontosPostDTO;
@@ -9,6 +10,7 @@ import com.cidadao_alerta.Cidadao_Alerta.Repositories.UsuarioRepositories;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,7 +27,7 @@ public class PontoController {
 
 
     @PostMapping("/Ponto/criarponto")
-    public Pontos criarPonto (@RequestBody PontosPostDTO pontos){
+    public PontoGetDTO criarPonto (@RequestBody PontosPostDTO pontos){
         Pontos novoPonto = new Pontos();
         novoPonto.setUsuario(this.usuarioRepositories.findByEmail(pontos.getCriador()).get());
         novoPonto.setName(pontos.getName());
@@ -34,28 +36,34 @@ public class PontoController {
         novoPonto.setLng(pontos.getLng());
         novoPonto.setTipoOcorrencia(pontos.getTipoOcorrencia());
         System.out.println(novoPonto);
-
-        return this.pontosRepositories.save(novoPonto);
+        this.pontosRepositories.save(novoPonto);
+        return new PontoGetDTO(novoPonto);
     }
     @GetMapping("/Pontos")
-    public List<Pontos> listarPontos (){
-        return this.pontosRepositories.findAll();
+    public List<PontoGetDTO> listarPontosDTO() {
+        List<Pontos> pontos = pontosRepositories.findAll();
+        List<PontoGetDTO> pontosDTO = new ArrayList<>();
+
+        for (Pontos ponto : pontos) {
+            pontosDTO.add(new PontoGetDTO(ponto));
+        }
+        return pontosDTO;
     }
 
 
     @PutMapping("/Ponto/Alterar/{idPonto}")
-    public Pontos alterarPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDTO situacao){
+    public PontoGetDTO alterarPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDTO situacao){
         Pontos ponto = this.pontosRepositories.findById(idPonto).get();
         ponto.setSituacao(situacao.getSituacao());
-        return this.pontosRepositories.save(ponto);
-
+        this.pontosRepositories.save(ponto);
+        return new PontoGetDTO(ponto);
     }
 
     @PutMapping("/Ponto/AlterarDesc/{idPonto}")
-    public Pontos alterarDescPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDescDTO situacao){
+    public PontoGetDTO alterarDescPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDescDTO situacao){
         Pontos ponto = this.pontosRepositories.findById(idPonto).get();
         ponto.setDescription(situacao.getDescription());
-        return this.pontosRepositories.save(ponto);
-
+        this.pontosRepositories.save(ponto);
+        return new PontoGetDTO(ponto);
     }
 }

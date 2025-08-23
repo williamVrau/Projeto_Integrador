@@ -9,7 +9,7 @@ public class UsuarioGetPostDTO {
 
     public UsuarioGetPostDTO(Usuario user) {
         this.nome = user.getNome(); ;
-        this.email = user.getNome();
+        this.email = user.getEmail();
     }
 
     public String getEmail() {

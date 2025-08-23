@@ -2,6 +2,7 @@ package com.cidadao_alerta.Cidadao_Alerta.Controllers;
 
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Auth.LoginRequest;
 import com.cidadao_alerta.Cidadao_Alerta.DTOs.Auth.LoginResponse;
+import com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario.UsuarioGetPostDTO;
 import com.cidadao_alerta.Cidadao_Alerta.Entities.Usuario;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.UsuarioRepositories;
 import com.cidadao_alerta.Cidadao_Alerta.Services.JWTService;
@@ -31,12 +32,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public Usuario criarUsuario(@RequestBody Usuario usuario) {
+    public UsuarioGetPostDTO criarUsuario(@RequestBody Usuario usuario) {
         if (this.usuarioRepository.findByEmail(usuario.getEmail()).isPresent()){
             throw new BadCredentialsException("Email em Uso");
         }
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        return this.usuarioRepository.save(usuario);
+        this.usuarioRepository.save(usuario);
+        return new UsuarioGetPostDTO(usuario);
 
     }
 
