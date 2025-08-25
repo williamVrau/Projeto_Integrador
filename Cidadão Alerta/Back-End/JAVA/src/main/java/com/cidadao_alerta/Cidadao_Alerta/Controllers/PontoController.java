@@ -25,9 +25,8 @@ public class PontoController {
         this.usuarioRepositories = usuarioRepositories;
     }
 
-
     @PostMapping("/Ponto/criarponto")
-    public PontoGetDTO criarPonto (@RequestBody PontosPostDTO pontos){
+    public PontoGetDTO criarPonto(@RequestBody PontosPostDTO pontos) {
         Pontos novoPonto = new Pontos();
         novoPonto.setUsuario(this.usuarioRepositories.findByEmail(pontos.getCriador()).get());
         novoPonto.setName(pontos.getName());
@@ -35,10 +34,12 @@ public class PontoController {
         novoPonto.setLat(pontos.getLat());
         novoPonto.setLng(pontos.getLng());
         novoPonto.setTipoOcorrencia(pontos.getTipoOcorrencia());
-        System.out.println(novoPonto);
+        novoPonto.setUrlImagen(pontos.getUrlImagen() != null ? pontos.getUrlImagen() : ""); // Salva Base64 ou string vazia
+        System.out.println("Ponto criado: " + novoPonto);
         this.pontosRepositories.save(novoPonto);
         return new PontoGetDTO(novoPonto);
     }
+
     @GetMapping("/Pontos")
     public List<PontoGetDTO> listarPontosDTO() {
         List<Pontos> pontos = pontosRepositories.findAll();
@@ -50,9 +51,8 @@ public class PontoController {
         return pontosDTO;
     }
 
-
     @PutMapping("/Ponto/Alterar/{idPonto}")
-    public PontoGetDTO alterarPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDTO situacao){
+    public PontoGetDTO alterarPonto(@PathVariable Integer idPonto, @RequestBody PontoPutDTO situacao) {
         Pontos ponto = this.pontosRepositories.findById(idPonto).get();
         ponto.setSituacao(situacao.getSituacao());
         this.pontosRepositories.save(ponto);
@@ -60,7 +60,7 @@ public class PontoController {
     }
 
     @PutMapping("/Ponto/AlterarDesc/{idPonto}")
-    public PontoGetDTO alterarDescPonto (@PathVariable Integer idPonto, @RequestBody PontoPutDescDTO situacao){
+    public PontoGetDTO alterarDescPonto(@PathVariable Integer idPonto, @RequestBody PontoPutDescDTO situacao) {
         Pontos ponto = this.pontosRepositories.findById(idPonto).get();
         ponto.setDescription(situacao.getDescription());
         this.pontosRepositories.save(ponto);

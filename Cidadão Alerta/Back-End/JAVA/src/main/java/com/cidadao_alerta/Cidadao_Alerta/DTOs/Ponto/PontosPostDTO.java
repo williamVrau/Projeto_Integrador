@@ -6,7 +6,7 @@ import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
-public class PontosPostDTO{
+public class PontosPostDTO {
     private String name;
     private String description;
     private Double lat;
@@ -14,32 +14,15 @@ public class PontosPostDTO{
     private String tipoOcorrencia;
     private String situacao;
     private String criador;
+    private String urlImagen; // Campo para Base64
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public Double getLng() {
-        return lng;
-    }
-
-    public String getTipoOcorrencia() {
-        return tipoOcorrencia;
-    }
-
-    public String getSituacao() {
-        return situacao;
-    }
-
-    public String getCriador() {
-        return criador;
-    }
+    public String getName() { return name; }
+    public String getDescription() { return description; }
+    public Double getLat() { return lat; }
+    public Double getLng() { return lng; }
+    public String getTipoOcorrencia() { return tipoOcorrencia; }
+    public String getSituacao() { return situacao; }
+    public String getCriador() { return criador; }
+    public String getUrlImagen() { return urlImagen; } // Getter para Base64
+    public void setUrlImagen(String urlImagen) { this.urlImagen = urlImagen; } // Setter
 }
