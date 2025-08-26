@@ -129,7 +129,13 @@ function savePoint(name, description, latlng, tipoOcorrencia, urlImagen) {
             urlImagen, // Envia base64 ou null
             criador: nomeCriador }),
     })
-        .then((data) => data.json())
+        .then(async (res) => {
+  if (!res.ok) {
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Erro ao criar ponto");
+  }
+  return res.json();
+})
         .then((response) => {
             addMarkerToMap(response);
 
