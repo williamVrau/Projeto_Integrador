@@ -8,6 +8,8 @@ import com.cidadao_alerta.Cidadao_Alerta.Entities.Voto;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.PontosRepositories;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.UsuarioRepositories;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.VotosRepositories;
+import com.cidadao_alerta.Cidadao_Alerta.exceptions.PontoNaoEncontradoException;
+import com.cidadao_alerta.Cidadao_Alerta.exceptions.UsuarioNaoEncontradoException;
 import org.springframework.data.repository.support.Repositories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +35,11 @@ public class VotoController {
     public ResponseEntity<?> votarPonto(@RequestBody VotoPostDTO voto, @PathVariable Integer pontoId) {
         // Busca usuário pelo email
         Usuario usuario = this.usuarioRepositories.findByEmail(voto.getNomeUsuario())
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new PontoNaoEncontradoException(pontoId));
 
         // Busca ponto
         Pontos ponto = this.pontosRepositories.findById(pontoId)
-                .orElseThrow(() -> new RuntimeException("Ponto não encontrado"));
+                .orElseThrow(() -> new UsuarioNaoEncontradoException(voto.getNomeUsuario()));
 
         // Lista de votos que o usuário já fez
         List<Voto> votosUsuario = usuario.getVotos();

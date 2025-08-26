@@ -1,3 +1,7 @@
+function validarEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
 
 function login() {
   const email = document.getElementById('loginEmail').value;
@@ -29,6 +33,17 @@ function registrar() {
   const nome = document.getElementById('regNome').value;
   const email = document.getElementById('regEmail').value;
   const senha = document.getElementById('regSenha').value;
+
+
+  if (!nome || !email || !senha) {
+    alert("Preencha todos os campos");
+    return;
+  }
+
+  if (!validarEmail(email)) {
+    alert("E-mail inválido");
+    return;
+  }
 
   fetch('http://localhost:8080/auth/register', {
     method: 'POST',
