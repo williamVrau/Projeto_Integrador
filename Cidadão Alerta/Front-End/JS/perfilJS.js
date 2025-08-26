@@ -12,7 +12,10 @@ async function carregarPerfil() {
         'Content-Type': 'application/json',
       }
     });
-
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Erro ao carregar perfil");
+}
     const usuario = await response.json();
 
     // Preenche informações do usuário

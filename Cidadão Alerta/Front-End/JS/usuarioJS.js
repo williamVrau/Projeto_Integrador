@@ -14,7 +14,13 @@ function login() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, senha })
   })
-  .then((data) => data.json())
+  .then(async (res) => {
+  if (!res.ok) {  // se deu erro (400, 404, 500...)
+    const errorData = await res.json();
+    throw new Error(errorData.message || "Erro desconhecido");
+  }
+  return res.json();
+})
     .then((response) => {
       console.log(response);
       localStorage.setItem("token", response.token);
@@ -25,7 +31,7 @@ function login() {
     })
     .catch((error) => {
       console.log(error);
-      alert("Usuario ou senha incorretos");
+      alert("Erro: "+error.message);
     });  
 }}
 
