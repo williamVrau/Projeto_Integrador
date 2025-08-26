@@ -7,6 +7,8 @@ import com.cidadao_alerta.Cidadao_Alerta.DTOs.Ponto.PontosPostDTO;
 import com.cidadao_alerta.Cidadao_Alerta.Entities.Pontos;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.PontosRepositories;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.UsuarioRepositories;
+import com.cidadao_alerta.Cidadao_Alerta.Services.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,6 +21,8 @@ public class PontoController {
     private static String caminhoImagens = "D:/repositorio GitHub/projeto_Integrador/cidadão Alerta/front-End/iMGs/";
     private final PontosRepositories pontosRepositories;
     private final UsuarioRepositories usuarioRepositories;
+    @Autowired
+    private EmailService emailService;
 
     public PontoController(PontosRepositories pontosRepositories, UsuarioRepositories usuarioRepositories) {
         this.pontosRepositories = pontosRepositories;
@@ -37,6 +41,13 @@ public class PontoController {
         novoPonto.setUrlImagen(pontos.getUrlImagen() != null ? pontos.getUrlImagen() : ""); // Salva Base64 ou string vazia
         System.out.println("Ponto criado: " + novoPonto);
         this.pontosRepositories.save(novoPonto);
+        emailService.enviarEmail("cidadaoalerta.21@gmail.com","O Usuario "
+                        +pontos.getCriador()+" Acabou de Criar um ponto",
+                " O " + pontos.getCriador() + "Crio Ponto " + pontos.getName()+
+                        " com a descricao " + pontos.getDescription()
+                );
+
+
         return new PontoGetDTO(novoPonto);
     }
 
