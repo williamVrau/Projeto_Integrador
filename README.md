@@ -122,5 +122,5 @@ Desenvolver uma aplicação web interativa que permita aos cidadãos reportarem 
 
 ## Contato
 
-Projeto desenvolvido por Cassandra Corbani e equipe.  
+Projeto desenvolvido por Cassandra Corbani, Maria Reinert.  
 Para dúvidas ou sugestões, entre em contato: [seu-email@exemplo.com]
