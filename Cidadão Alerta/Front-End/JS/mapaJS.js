@@ -2,12 +2,6 @@
 let mapInitialized = false;
 let map;
 let markers = [];
-setTimeout(() => {
-    inicializarMapa();
-    loadPointsList();
-    map.invalidateSize();
-    mapInitialized = true;
-}, 100);
 // Classe Ponto
 class Ponto {
     constructor({ id, name, description, lat, lng, tipoOcorrencia, dataCriacao, situacao, urlImagen, usuario, votos }) {
@@ -88,7 +82,6 @@ function onMapClick(e) {
         .setLatLng(latlng)
         .setContent(popupContent)
         .openOn(map);
-    setTimeout(() => {
         document.getElementById('pointForm').addEventListener('submit', function (event) {
             event.preventDefault();
             const name = document.getElementById('pointName').value;
@@ -110,7 +103,7 @@ function onMapClick(e) {
                 savePoint(name, description, latlng, tipoOcorrencia, null);
             }
         });
-    }, 100);
+    ;
 }
 //Salvar novo ponto
 function savePoint(name, description, latlng, tipoOcorrencia, urlImagen) {
@@ -137,12 +130,10 @@ function savePoint(name, description, latlng, tipoOcorrencia, urlImagen) {
   return res.json();
 })
         .then((response) => {
-            addMarkerToMap(response);
+        
 
             // Assim que criar o ponto, já vota nele 1 vez
             votarAPI(response.id);
-
-            loadPointsList();
             map.closePopup();
         })
         .catch((error) => {
@@ -284,5 +275,8 @@ function recarregarMarcadores() {
         .catch(err => console.error("Erro ao recarregar marcadores:", err));
 }
 window.addEventListener('DOMContentLoaded', () => {
+    inicializarMapa();
     loadPointsList();
+    map.invalidateSize();
+    mapInitialized = true;
 });
