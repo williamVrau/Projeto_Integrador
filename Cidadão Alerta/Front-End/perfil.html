@@ -3,27 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="CSS/perfil.css">
+     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <title>Perfil</title>
 </head>
 <body>
-      <header>
-    <h1>Cidadão Alerta</h1>
+    <header>
     <nav>
       <span id="nomeUsuario"></span>
-      <a href="index.html" target="_self">Pagina Inicial</a>
-      <a id="loginLink" href="login.html" target="_self">Login</a>
+      <a href="index.html" target="_self">Cidadão Alerta</a>
       <a id="registroLink" href="registro.html" target="_self">Registrar</a>
-      <a id="perfilLink" href="perfil.html" target="_self">perfil</a>
-      <a href="ocorrencia.html">ocorrencia</a>
-      <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
+      <a href="ocorrencia.html" class="initocor"> Ocorrência</a>
+      <button id="logoutBtn" onclick="logout()" style="display: none;" class="exitindex"> Sair
+        <img src="IMGs/download.png">
+      </button>
     </nav>
   </header>
   <div class="perfil">
-    <h2 id="nome">Nome: </h2>
-    <p id="email">Email: </p>
-    <p id="classe">Classe: </p>
-    <p id="qtdPontos">Quantidade de pontos: </p>
+  <div class="campo">
+    <span class="titulo">Usuário</span>
+    <span class="valor" id="nome">João da Silva</span>
   </div>
+
+  <div class="campo">
+    <span class="titulo">Email</span>
+    <span class="valor" id="email">joao@email.com</span>
+  </div>
+
+  <div class="campo">
+    <span class="titulo">Classe</span>
+    <span class="valor" id="classe">Cidadão</span>
+  </div>
+
+  <div class="campo">
+    <span class="titulo">Quantidade de pontos</span>
+    <span class="valor" id="qtdPontos">120</span>
+  </div>
+</div>
+
 
   <h3>Lista de Pontos</h3>
   <table class="tabela-pontos" id="tabelaPontos">

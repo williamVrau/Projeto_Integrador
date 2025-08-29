@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  min-height: 100vh; /* ocupa no mínimo toda a altura da tela */
+  background-size: cover; /* faz a imagem cobrir a tela */
+  background-position: center; /* centraliza */
+  background-repeat: no-repeat; /* evita repetição */
+  background-attachment: fixed; /* faz "grudar" no fundo */
+  background-image: linear-gradient(
+      rgba(0, 4, 45, 0.5), 
+      rgba(0, 4, 45, 0.5)
+    ),
+    url(../IMGs/morgirl.jpg);
+  color: #fff;
+  padding-top: 120px; /* pra não sobrepor o header */
+}
+
+/*Mobile*/
+@media (max-width: 720px) {
+header {
+  height: 90px;
+  padding: 0 1rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  margin-left: 20px;
+}
+
+#nomeUsuario {
+  font-size: 16px;
+  font-weight: 800;
+  margin-right: auto;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  padding: 5px 35px 8px 25px;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.exitindex {
+  font-size: 16px;
+  width: 50px;
+  height: 35px; 
+  background-color: #fff;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.exitindex:hover {
+  background-color: transparent;
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+.exitindex img {
+  display: none;
+}
+
+.perfil {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin-left: 30px;
+}
+
+.perfil .campo {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+.perfil .titulo {
+    display: block;
+    font-weight: bold;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.perfil .valor {
+    display: block;
+    font-size: 16px;
+    color: #ddd;
+}
+
+.perfil h2, .perfil p {
+  margin-bottom: 10px;
+  font-weight: 500;
+}
+
+
+/* Tabela de pontos */
+.tabela-pontos {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: rgba(255,255,255,0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabela-pontos th, .tabela-pontos td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  font-size: 14px;
+}
+
+.tabela-pontos th {
+  background-color: rgba(0,0,0,0.3);
+}
+
+/* Popup */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+}
+}

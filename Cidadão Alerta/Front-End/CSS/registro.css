@@ -29,17 +29,7 @@ header {
 nav {
   display: flex;
   align-items: center;
-  gap: 6px; /* espaçamento entre os links */
-  flex: 1;
-}
-
-
-nav a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0 10px; /* espaçamento horizontal */
-  font-size: 14px;
-  font-weight: 600;
+  margin-left: auto;
 }
 
 nav a:hover {
@@ -54,6 +44,13 @@ nav a.pag-init {
   margin-right: auto; /* para alinhar com o início do header */
 }
 
+.inti{
+  font-size: 20px;
+  text-decoration: bold;
+  font-weight: 700;
+  color: #fff;
+}
+
 body {
   display: flex;
   justify-content: center;
@@ -66,7 +63,8 @@ body {
 }
 
 .container {
-  width: 420px;
+  width: 380px;
+  height: 430px;
   background-color: transparent;
   border: 2px solid rgba(255, 255, 255, .2);
   border-radius: 10px;
@@ -135,6 +133,7 @@ nav {
   margin-left: 4px;
   gap: 20px; /* espaçamento entre os links */
   flex: 1;
+  margin-left: 30px;
 }
 nav a {
   color: #fff;
