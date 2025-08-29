@@ -1,67 +1,44 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cidadão Alerta</title>
-  
-  <!-- Link para o CSS e Icons -->
-    <link rel="stylesheet" href="CSS/login.css" />
-    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidadão Alerta - Login</title>
+    <link rel="stylesheet" href="css/login.css">
 </head>
-
 <body>
-  <header>
-    <h1>Cidadão Alerta</h1>
+<header>
     <nav>
-      <span id="nomeUsuario"></span>
-      <a href="index.html" target="_self">Pagina Inicial</a>
-      <a id="loginLink" href="login.html" target="_self">Login</a>
-      <a id="registroLink" href="registro.html" target="_self">Registrar</a>
-      <a id="perfilLink" href="perfil.html" target="_self">perfil</a>
-      <a href="ocorrencia.html">ocorrencia</a>
-      <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
+        <a href="index.html" class="pag-init">Cidadão Alerta</a>
+        <a href="registro.html" id="registroLink">Registrar</a>
+        <a href="perfil.html" id="perfilLink">Perfil</a>
+        <a href="ocorrencia.html">Ocorrência</a>
+        <span id="nomeUsuario"></span>
+        <button class="exitindex" id="logoutBtn" onclick="logout()">Sair</button>
     </nav>
-  </header>
-  
-   <main class="container">
-      <form>
+</header>
+<main>
+    <div class="container">
         <h2>Login Cidadão Alerta</h2>
-        <div class="input-box">
-          <input type="email" id="loginEmail" placeholder="Email" />
-          <i class="bx bxs-user"></i>
-        </div>
-        
-        <div class="input-box">
-          <input type="password" id="loginSenha" placeholder="Senha" />
-          <i class="bx bxs-lock-alt"></i>
-        </div>
-
-        <div class="register-link">
-            <p> Não tem uma conta? <a href="registro.html">Cadastre-se</a></p>
-          </div>
-
-      <button type="button" class="login" onclick="login()">Entrar</button>
-    </form>
-  </main>
-
-  <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
-  <script src="JS/usuarioJS.js"></script>
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-  const emailSalvo = localStorage.getItem("tempEmail");
-  const senhaSalva = localStorage.getItem("tempSenha");
-
-  if (emailSalvo && senhaSalva) {
-    document.getElementById('loginEmail').value = emailSalvo;
-    document.getElementById('loginSenha').value = senhaSalva;
-
-    // Remove do localStorage para não ficar guardado
-    localStorage.removeItem("tempEmail");
-    localStorage.removeItem("tempSenha");
-  }
-});
-</script>
+        <form onsubmit="login(); return false;">
+            <div class="input-box">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="loginSenha" placeholder="Senha" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <div class="remember-forgot">
+                <label><input type="checkbox"> Lembrar-me</label>
+                <a href="#">Esqueceu a senha?</a>
+            </div>
+            <button type="submit" class="login">Entrar</button>
+            <p class="register-link">Não tem uma conta? <a href="registro.html">Cadastre-se</a></p>
+        </form>
+    </div>
+</main>
+<script src="https://kit.fontawesome.com/your-kit.js" crossorigin="anonymous"></script> <!-- Se usar icons -->
+<script src="js/usuarioJS.js"></script> <!-- Seu JS para login -->
 </body>
 </html>

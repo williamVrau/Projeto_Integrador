@@ -1,55 +1,42 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title> Cidadão Alerta Registro </title>
-
-  <!-- Link para o CSS e Icons -->
-      <link rel="stylesheet" href="CSS/registro.css" />
-      <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidadão Alerta - Registro</title>
+    <link rel="stylesheet" href="css/registro.css">
 </head>
-
 <body>
-  <header>
-    <h1>Cidadão Alerta</h1>
+<header>
     <nav>
-      <span id="nomeUsuario"></span>
-      <a href="index.html" target="_self">Pagina Inicial</a>
-      <a id="loginLink" href="login.html" target="_self">Login</a>
-      <a id="registroLink" href="registro.html" target="_self">Registrar</a>
-      <a id="perfilLink" href="perfil.html" target="_self">perfil</a>
-      <a href="ocorrencia.html">ocorrencia</a>
-      <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
+        <a href="index.html" class="pag-init">Cidadão Alerta</a>
+        <a href="login.html" id="loginLink">Login</a>
+        <a href="perfil.html" id="perfilLink">Perfil</a>
+        <a href="ocorrencia.html">Ocorrência</a>
+        <span id="nomeUsuario"></span>
     </nav>
-  </header>
-
-  <main class="container">
-    
-    <!-- Seção de registro com nome, e-mail e senha -->
-    <form>
-      <h2>Registro Cidadão Alerta</h2>
-      <div class="input-box">
-        <input type="text" id="regNome" placeholder="Nome" />
-        <i class="bx bxs-user"></i>
-      </div>
-
-      <div class="input-box">
-        <input type="email" id="regEmail" placeholder="Email" />
-        <i class="bx bxs-envelope"></i>
-      </div>
-
-      <div class="input-box">
-        <input type="password" id="regSenha" placeholder="Senha" />
-        <i class="bx bxs-lock-alt"></i>
-      </div>
-    </form>
-
-    <button class="registerb" onclick="registrar()">Registrar</button>
-      </main>
-
-  <script src="JS/usuarioJS.js"></script>
+</header>
+<main>
+    <div class="container">
+        <h2>Registro Cidadão Alerta</h2>
+        <form onsubmit="registrar(); return false;">
+            <div class="input-box">
+                <input type="text" id="regNome" placeholder="Nome" required>
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="input-box">
+                <input type="email" id="regEmail" placeholder="Email" required>
+                <i class="fas fa-envelope"></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="regSenha" placeholder="Senha" required>
+                <i class="fas fa-lock"></i>
+            </div>
+            <button type="submit" class="registerb">Registrar</button>
+        </form>
+    </div>
+</main>
+<script src="https://kit.fontawesome.com/your-kit.js" crossorigin="anonymous"></script> <!-- Se usar icons -->
+<script src="js/usuarioJS.js"></script> <!-- Seu JS para registro -->
 </body>
-
 </html>

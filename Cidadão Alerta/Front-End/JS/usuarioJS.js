@@ -77,7 +77,9 @@ function logout() {
   // Remove dados de autenticação
   localStorage.removeItem('token');
   localStorage.removeItem('nome'); 
-  localStorage.removeItem('email'); 
+  localStorage.removeItem('email');
+  localStorage.removeItem('tempEmail'); // Remove itens temporários, se existirem
+  localStorage.removeItem('tempSenha');
 
   // Feedback para o usuário
   alert("Você saiu da conta.");

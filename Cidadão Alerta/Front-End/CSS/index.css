@@ -1,36 +1,78 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif;
 }
 
 header {
-  height: 60px;
-  padding: 0 1rem; /* só horizontal, sem padding vertical */
-  line-height: 60px; /* para centralizar texto verticalmente */
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: transparent;
-  color: white;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  text-align: start;
-  font-weight: 600;
-  border: 0.5px solid  rgb(255, 255, 255, 0.2); /* borda fina e transparente */
+    height: 60px;
+    padding: 0 1rem; /* só horizontal, sem padding vertical */
+    line-height: 60px; /* para centralizar texto verticalmente */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: transparent;
+    color: white;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    text-align: start;
+    font-weight: 600;
+    border: 0.5px solid  rgb(255, 255, 255, 0.2); /* borda fina e transparente */
 }
 
+.exitindex {
+    display: flex;
+    align-items: center;
+    width: 92.5px;
+    height: 25px;
+    margin-left: auto;
+    background-color: #fff;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 5px 5px 40px 14px;
+}
+.exitindex:hover{
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #fff;
+    transition: 0.5s;
+}
+nav span {
+    margin-right: 10px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.init {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.exitindex:hover img {
+    filter: invert(1);
+    transition: 0.5s;
+}
+.exitindex img {
+    width: 40px;
+    height: 40px;
+    margin-left: 0.2px;
+    vertical-align:middle;
+    padding: 24px px;
+}
 nav {
-  display: flex;
-  align-items: center;
-  gap: 6px; /* espaçamento entre os links */
-  flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 2px; /* espaçamento entre os links */
+    flex: 1;
 }
 
 .loginb {
@@ -38,53 +80,53 @@ nav {
 }
 
 .sec1 {
-  align-items: stretch;
-  margin-top: 350px;
-  font-size: 10px;
-  color: #fff;
+    align-items: center;
+    margin-top: 350px;
+    font-size: 10px;
+    color: #fff;
 }
 
 body {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-image: linear-gradient(rgba(0, 4, 45, 0.5), rgba(0, 4, 45, 0.5)), url(../IMGs/iStock-1967535104-1536x1024.jpg);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-image: linear-gradient(rgba(0, 4, 45, 0.5), rgba(0, 4, 45, 0.5)), url(../IMGs/iStock-1967535104-1536x1024.jpg);
 }
 
 .register {
-  width: 100px;
-  height: 30px;
-  background-color: #fff;
-  border: none;
-  border-radius: 40px;
-  cursor: pointer;
-  font-size: 13px;
-  color: #333;
-  font-weight: 600;
-  box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
-  margin-top: 20px;
-  margin-left: 10px;
+    width: 100px;
+    height: 30px;
+    background-color: #fff;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    font-weight: 600;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    margin-top: 20px;
+    margin-left: 10px;
 }
 .register:hover{
-  background-color: transparent;
-  border: 2px solid rgba(255, 255, 255, .2);
-  color: #fff;
-  transition: 0.5s;
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #fff;
+    transition: 0.5s;
 }
 
 nav a {
-  color: #fff;
-  text-decoration: none;
-  padding: 0 10px; /* espaçamento horizontal */
-  font-size: 14px;
-  font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px; /* espaçamento horizontal */
+    font-size: 14px;
+    font-weight: 600;
 }
 
 nav a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 h1 {
@@ -103,3 +145,154 @@ h3 {
     margin-left: 10px;
 }
 
+
+/* Tablet e telas médias */
+@media (max-width: 1200px) {
+    header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        height: auto;
+        padding: 10px 15px;
+        gap: 5px;
+    }
+    nav {
+        flex-direction: row;
+        justify-content: center;
+        gap: 8px;
+        flex: 1 1 100%;
+    }
+    nav a, nav span {
+        font-size: 13px;
+
+        .exitindex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 80px;
+            height: 28px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 8px;
+            background-color: #fff;
+            border: none;
+            border-radius: 35px;
+            cursor: pointer;
+        }
+
+        /* imagem dentro do botão */
+        .exitindex img {
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        /* Seção principal */
+        .sec1 {
+            margin-top: 350px;
+            text-align: center;
+        }
+        .sec1 h1 {
+            font-size: 28px;
+        }
+        .sec1 h3, .sec1 h4 {
+            font-size: 14px;
+            margin-left: 0;
+        }
+
+        /* Botão registrar */
+        .register {
+            width: 130px;
+            height: 38px;
+            font-size: 15px;
+            margin: 20px auto;
+            display: block;
+        }
+    }
+
+
+
+
+
+
+
+
+
+    /* Mobile */
+    @media (max-width: 720px) {
+
+        body {
+            background-image: linear-gradient(rgba(0, 4, 45, 0.5), rgba(0, 4, 45, 0.5)), url(../IMGs/morgirl.jpg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px;
+            gap: 10px;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            font-size: 13px;
+        }
+
+        #nomeUsuario {
+            font-weight: bold;
+            font-size: 16px;
+            color: #fff;
+            margin-left: 29%;
+
+        }
+
+        /* Seção principal */
+        .sec1 {
+            margin-top: 160px;
+            text-align: center;
+            gap: 10px;
+        }
+        .sec1 h1 {
+            font-size: 22px;
+            line-height: 1.2;
+        }
+        .sec1 h3, .sec1 h4 {
+            font-size: 15px;
+        }
+
+        /* Botão registrar */
+        .register {
+            width: 90%;
+            max-width: 180px;
+            height: 38px;
+            font-size: 14px;
+            margin: 15px auto;
+            display: block;
+        }
+
+        /* Botão logout */
+        .exitindex span {
+            margin-left: 2px;
+        }
+        .exitindex img {
+            display: none;
+        }
+        .exitindex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 35px;
+            font-size: 12px;
+            padding: 4px 8px 0px 8px;
+            margin-right: 10px;
+        }
+    }
+}
