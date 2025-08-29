@@ -1,55 +1,40 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Cidadão Alerta</title>
-
-  <link rel="stylesheet" href="CSS/styles.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidadão Alerta - Ocorrência</title>
+    <link rel="stylesheet" href="css/ocorrencia.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 </head>
-
 <body>
-  <header>
+<header>
     <nav>
-      <span id="nomeUsuario"></span>
-      <a href="index.html" target="_self">Cidadão Alerta</a>
-      <a id="loginLink" href="login.html" target="_self">Login</a>
-      <a id="registroLink" href="registro.html" target="_self">Registrar</a>
-      <a id="perfilLink" href="perfil.html" target="_self"> Perfil</a>
-      <a href="ocorrencia.html"> Ocorrência</a>
-      <button id="logoutBtn" onclick="logout()" style="display: none;">Sair</button>
+        <a href="index.html" target="_self" class="init">Cidadão Alerta</a>
+        <a href="login.html" id="loginLink">Login</a>
+        <a href="perfil.html" id="perfilLink">Perfil</a>
+        <a href="ocorrencia.html">Ocorrência</a>
+        <span id="nomeUsuario"></span>
+        <button class="exitindex" id="logoutBtn" onclick="logout()">Sair</button>
     </nav>
-  </header>
-  <main>
-
-    <!-- Seção onde o mapa e os pontos de ocorrência são exibidos -->
+</header>
+<main>
     <section id="ocorrencias">
-      <h2>Registrar Ocorrência</h2>
-
-      <!-- Mapa interativo para registrar ocorrências clicando -->
-      <div id="map"></div>
-
-
-      <label for="filtroTipo">Filtrar por tipo:</label>
-<select id="filtroTipo" onchange="filtrarMapa(this.value)">
-  <option value="">-- Todos --</option>
-  <option value="infraestrutura">Infraestrutura</option>
-  <option value="cabos-rompidos">Cabos Rompidos</option>
-  <option value="lixo">Lixo</option>
-  <option value="melhorias">Melhorias</option>
-</select>
-
-      <!-- Lista de ocorrências salvas pelo usuário -->
-      <div id="pointsList" style="padding: 20px; background-color: #f9f9f9; margin-top: 20px;">
-        <!-- Lista de pontos gerada pelo JavaScript -->
-      </div>
+        <h2>Registrar Ocorrência</h2>
+        <div id="map"></div>
+        <label for="filtroTipo">Filtrar por tipo:</label>
+        <select id="filtroTipo" onchange="filtrarPorTipo(this.value)">
+            <option value="">-- Todos --</option>
+            <option value="infraestrutura">Infraestrutura</option>
+            <option value="cabos-rompidos">Cabos Rompidos</option>
+            <option value="lixo">Lixo</option>
+            <option value="melhorias">Melhorias</option>
+        </select>
+        <div id="pointsList"></div>
     </section>
-  </main>
-
-  <!-- Scripts externos: Leaflet (mapa) e lógica do app -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-  <script src="JS/usuarioJS.js"></script>
-  <script src="JS/mapaJS.js">   </script>
+</main>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="js/usuarioJS.js"></script>
+<script src="js/mapaJS.js"></script>
 </body>
 </html>
