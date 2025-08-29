@@ -1,6 +1,7 @@
 -- Criação do schema
 CREATE SCHEMA IF NOT EXISTS cidadao_alerta;
 USE cidadao_alerta;
+
 CREATE TABLE Usuario (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(255) NOT NULL,
@@ -16,23 +17,23 @@ CREATE TABLE Pontos (
     lat DOUBLE,
     lng DOUBLE,
     tipo_ocorrencia VARCHAR(100),
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    situacao VARCHAR(100) DEFAULT "Aberta" ,
-    url_imagen VARCHAR(500),
+    data_criacao DATE,
+    situacao VARCHAR(100),
+    url_imagen longtext,
     usuario_id INT,
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id)
 );
 
 CREATE TABLE Voto (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_criacao DATE,
     usuario_id INT,
     pontos_id INT,
     FOREIGN KEY (usuario_id) REFERENCES Usuario(id),
     FOREIGN KEY (pontos_id) REFERENCES Pontos(id)
 );
+select * from voto;
 
-
-set sql_safe_updates = 0;
-
-select * From usuario;
+UPDATE voto
+SET data_criacao = '2025-08-12'
+WHERE id = 1;

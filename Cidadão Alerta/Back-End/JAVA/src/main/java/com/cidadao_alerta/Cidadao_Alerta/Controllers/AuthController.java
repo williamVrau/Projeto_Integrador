@@ -6,6 +6,7 @@ import com.cidadao_alerta.Cidadao_Alerta.DTOs.Usuario.UsuarioGetPostDTO;
 import com.cidadao_alerta.Cidadao_Alerta.Entities.Usuario;
 import com.cidadao_alerta.Cidadao_Alerta.Repositories.UsuarioRepositories;
 import com.cidadao_alerta.Cidadao_Alerta.Services.JWTService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -43,15 +44,20 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         UserDetails user = userDetailsService.loadUserByUsername(request.email);
         Usuario usuarioEmail = this.usuarioRepository.findByEmail(request.email).get();
+        try {
+
 
         if (!passwordEncoder.matches(request.senha, user.getPassword())) {
             throw new BadCredentialsException("Senha inválida");
         }
 
         String token = jwtService.generateToken(user);
-        return new LoginResponse(token, usuarioEmail);
+            return ResponseEntity.ok(new LoginResponse(token, usuarioEmail));
+    }catch (IllegalArgumentException e) {
+            throw new RuntimeException("Usuário ou senha incorretos.");
+        }
     }
 }
