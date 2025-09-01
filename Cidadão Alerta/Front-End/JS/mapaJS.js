@@ -210,7 +210,7 @@ function getMarkerColor(votes) {
     return 'black';
 }
 // Carrega e exibe lista de pontos salvos no localStorage
-function loadPointsList() {
+function loadPointsList(tipoFiltro = "") {
     fetch('http://localhost:8080/Pontos', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -218,7 +218,12 @@ function loadPointsList() {
         .then(res => res.json())
         .then(response => {
             // Transforma cada retorno da API em objeto Ponto
-            const savedPoints = (response || []).map(p => new Ponto(p));
+            let savedPoints = (response || []).map(p => new Ponto(p));
+
+            // 🔹 Aplica filtro antes de ordenar
+            if (tipoFiltro) {
+                savedPoints = savedPoints.filter(p => p.tipoOcorrencia === tipoFiltro);
+            }
 
             // Ordenar por votos (desc) e depois por nome (asc)
             savedPoints.sort((a, b) => {
@@ -233,7 +238,7 @@ function loadPointsList() {
             listContainer.innerHTML = '';
 
             if (savedPoints.length === 0) {
-                listContainer.innerHTML = '<p>Nenhum ponto adicionado ainda.</p>';
+                listContainer.innerHTML = '<p>Nenhum ponto encontrado.</p>';
                 return;
             }
 
@@ -241,12 +246,13 @@ function loadPointsList() {
             savedPoints.forEach(ponto => {
                 const li = document.createElement('li');
                 li.innerHTML = `
-          <strong>${ponto.name}</strong><br>
-          Data da Criação: ${ponto.dataCriacao}<br>
-          <strong>Votos:</strong> ${ponto.totalVotos}<br>
-          ${ponto.description || ''}<br>
-          ${ponto.urlImagen ? `<img src="${ponto.urlImagen}" width="100" /><br>` : ''}
-        `;
+                    <strong>${ponto.name}</strong><br>
+                    Tipo: ${ponto.tipoOcorrencia}<br>
+                    Data: ${ponto.dataCriacao}<br>
+                    <strong>Votos:</strong> ${ponto.totalVotos}<br>
+                    ${ponto.description || ''}<br>
+                    ${ponto.urlImagen ? `<img src="${ponto.urlImagen}" width="100" /><br>` : ''}
+                `;
                 ul.appendChild(li);
             });
 
@@ -256,7 +262,6 @@ function loadPointsList() {
             console.error(error);
             alert("Algo deu errado ao carregar os pontos");
         });
-
 }
 
 function recarregarMarcadores() {
