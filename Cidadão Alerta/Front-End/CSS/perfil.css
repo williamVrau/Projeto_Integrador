@@ -13,11 +13,19 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center; /* Altere de flex-start para center */
     background-image: url('../IMGs/iStock-1967535104-1536x1024.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+}
+header nav button {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background: none;
+    border: none;
+    cursor: pointer;
 }
 
 body::before {
@@ -29,6 +37,7 @@ body::before {
     height: 100%;
     background-color: rgba(26, 26, 26, 0.7);
     z-index: -1;
+    align-items: center;
 }
 
 header {
@@ -86,13 +95,14 @@ nav span.init {
 }
 
 #perfil {
-    margin-top: 70px;
+    margin: 70px auto 0 auto; /* Centraliza horizontalmente */
     padding: 20px;
     width: 90%;
     max-width: 1200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Adicione esta linha */
 }
 
 #perfil h2, #perfil h3 {
@@ -117,11 +127,15 @@ nav span.init {
     margin-bottom: 10px;
 }
 
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
 #tabelaPontos {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    overflow-x: auto; /* Adicionado para rolagem horizontal em telas pequenas */
 }
 
 #tabelaPontos th,
@@ -138,8 +152,8 @@ nav span.init {
 }
 
 #tabelaPontos td img {
-    max-width: 100px;
-    max-height: 100px;
+    max-width: 50px;
+    max-height: 50px;
     border-radius: 5px;
     object-fit: cover;
 }
@@ -164,17 +178,16 @@ nav span.init {
 }
 
 #tabelaPontos select {
-    width: 100%;
+    width: 10%;
     min-width: 150px; /* Garante espaço suficiente para "Em execução" */
-    height: 35px;
+    height: 15px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-radius: 20px;
     outline: none;
     font-size: 14px;
     color: #fff;
-    padding: 5px 10px;
-    margin-right: 10px;
+    padding: 5px 10px;  
     box-sizing: border-box; /* Inclui padding na largura */
 }
 
@@ -226,6 +239,17 @@ nav span.init {
 #popupDescricao button:hover {
     background-color: rgba(255, 255, 255, 0.2);
     border-color: rgba(255, 255, 255, 0.6);
+}
+
+#pointsList {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: 400px;      /* Limite de altura visível */
+    overflow-y: auto;       /* Ativa rolagem vertical */
 }
 
 @media (max-width: 720px) {
