@@ -212,6 +212,7 @@ h3 {
             display: block;
         }
     }
+}
 
 
 
@@ -234,13 +235,23 @@ h3 {
             gap: 10px;
         }
 
+        header {
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: center;
+            height: auto;
+            padding: 10px 15px;
+            width: 430px;
+            height: auto;
+        }
+
         nav {
             display: flex;
             flex-direction: row;
             flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
-            gap: 14px;
+
             width: 100%;
             font-size: 13px;
         }
@@ -295,4 +306,3 @@ h3 {
             margin-right: 10px;
         }
     }
-}
