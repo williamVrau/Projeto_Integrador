@@ -261,7 +261,6 @@ h3 {
             flex-wrap: nowrap;
             justify-content: space-between;
             align-items: center;
-
             width: 100%;
             font-size: 13px;
         }
@@ -270,6 +269,7 @@ h3 {
             font-weight: bold;
             font-size: 16px;
             color: #fff;
+            align-items: center;
             margin-left: 29%;
 
         }

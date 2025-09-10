@@ -260,6 +260,7 @@ nav span.init {
 @media (max-width: 720px) {
     #perfil {
         padding: 10px;
+        margin-left: 25%;
     }
 
     #tabelaPontos th,
@@ -290,6 +291,23 @@ nav span.init {
         max-width: 250px;
         height: 80px;
     }
+
+     .exitindex span {
+            margin-left: 2px;
+        }
+        .exitindex img {
+            display: none;
+        }
+        .exitindex {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 35px;
+            font-size: 12px;
+            padding: 4px 8px 4px 8px;
+            margin-left: 35%;
+        }
 }
 
 @media (min-width: 1024px) {
