@@ -57,6 +57,11 @@ header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.init {
+    font-size: 15px;
+    font-weight: 800;
+}
+
 nav {
     display: flex;
     align-items: center;

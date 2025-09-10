@@ -60,18 +60,31 @@ nav span.init {
     margin-right: auto;
 }
 
-
-.exitindex {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    background: none;
-    border: none;
-    cursor: pointer;
+.init {
+    font-size: 15px;
+    font-weight: 800;
 }
 
-.exitindex:hover {
-    background-color: #ddd;
+
+.exitindex {
+    display: flex;
+    align-items: center;
+    width: 62.5px;
+    height: 15px;
+    margin-left: auto;
+    background-color: #fff;
+    border: none;
+    border-radius: 35px;
+    cursor: pointer;
+    font-size: 13.5px;
+    font-weight: 600;
+    padding: 5px 5px 24px 4px;
+}
+.exitindex:hover{
+    background-color: transparent;
+    border: 2px solid rgba(255, 255, 255, .2);
+    color: #fff;
+    transition: 0.5s;
 }
 
 #ocorrencias {
