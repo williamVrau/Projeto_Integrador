@@ -145,6 +145,11 @@ h3 {
     margin-left: 10px;
 }
 
+.register a {
+    color: inherit;
+    text-decoration: none;
+}
+
 
 /* Tablet e telas médias */
 @media (max-width: 1200px) {
@@ -191,6 +196,11 @@ h3 {
 
 
         /* Seção principal */
+        
+        .register a {
+            color: inherit;
+            text-decoration: none;
+        }
         .sec1 {
             margin-top: 350px;
             text-align: center;
